@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Helpers } from '../../../helpers';
+import { AsideNavService } from '../../../_services/aside-nav.service';
 
 declare let mLayout: any;
 @Component({
@@ -9,12 +10,17 @@ declare let mLayout: any;
 })
 export class AsideNavComponent implements OnInit, AfterViewInit {
 
-
-    constructor() {
+    public asideNavMenus: any[];
+    constructor(private asideNavService: AsideNavService) {
 
     }
     ngOnInit() {
+      this.getAsideNav();
+    }
 
+    getAsideNav(): void{
+      this.asideNavService.getAsideNav()
+      .subscribe(asideNavMenus => this.asideNavMenus = asideNavMenus);
     }
     ngAfterViewInit() {
 

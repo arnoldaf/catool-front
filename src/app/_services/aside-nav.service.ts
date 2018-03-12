@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
+import { AppHttpService } from './app-http.service';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class AsideNavService {
-   private navUrl = 'http://localhost/catool/public/api/v1/aside-navs';  // URL to web api
+   private navResource = '/aside-navs';  // URL to web api
 
-  constructor(private http: HttpClient) { }
+  constructor(private appHttpService: AppHttpService) { }
 
   getAsideNav (): Observable<any> {
-    return this.http.get(this.navUrl)
+    return this.appHttpService.get(this.navResource, null, null)
       .pipe(
         tap(asideNav => this.log(`fetched menu`)),
         catchError(this.handleError('getAsideNav', []))

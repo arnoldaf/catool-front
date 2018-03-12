@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
+import { AppHttpService } from './_services/app-http.service';
 import { AsideNavService } from "./_services/aside-nav.service";
 
 @NgModule({
@@ -25,7 +26,11 @@ import { AsideNavService } from "./_services/aside-nav.service";
         ThemeRoutingModule,
         AuthModule,
     ],
-    providers: [ScriptLoaderService, AsideNavService],
+    providers: [
+      ScriptLoaderService,
+      AppHttpService,
+      AsideNavService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
+import { AppHttpService } from './_services/app-http.service';
 import { AsideNavService } from "./_services/aside-nav.service";
 
 import {AlertService} from './services/alert.service';
@@ -50,7 +51,8 @@ import {AppConfigModule} from './config/app-config.module';
         //AuthService,
         //AuthGuard,
         UserService,
-        LocalStorageService
+        LocalStorageService,
+        AppHttpService
     ],
     bootstrap: [AppComponent]
 })

@@ -15,12 +15,12 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
 
     }
     ngOnInit() {
-      this.getAsideNav();
+        this.getAsideNav();
     }
 
-    getAsideNav(): void{
-      this.asideNavService.getAsideNav()
-      .subscribe(asideNavMenus => this.asideNavMenus = asideNavMenus);
+    getAsideNav(): void {
+        this.asideNavService.getAsideNav()
+            .subscribe(asideNavMenus => this.asideNavMenus = asideNavMenus);
     }
     ngAfterViewInit() {
 

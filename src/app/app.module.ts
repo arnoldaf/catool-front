@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+//import { NgModule } from '@angular/core';
+import {NgModule, InjectionToken} from '@angular/core';
 import { ThemeComponent } from './theme/theme.component';
 import { LayoutModule } from './theme/layouts/layout.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -10,6 +11,20 @@ import { ScriptLoaderService } from "./_services/script-loader.service";
 import { ThemeRoutingModule } from "./theme/theme-routing.module";
 import { AuthModule } from "./auth/auth.module";
 import { AsideNavService } from "./_services/aside-nav.service";
+
+import {AlertService} from './services/alert.service';
+import {ApiService} from './services/api.service';
+//import {AlertComponent} from './directives/alert/alert.component';
+//import {LoaderComponent} from './directives/loader/loader.component';
+//import {ConfirmComponent} from './directives/confirm/confirm.component';
+//import {AuthGuard} from './guards/auth.guard';
+//import {AuthService} from './services/auth.service';
+import {UserService} from './services/user.service';
+import {LocalStorageService} from './services/local-storage.service';
+import {FormsModule, FormGroup, ReactiveFormsModule} from '@angular/forms';
+
+import {AppConfigModule} from './config/app-config.module';
+
 
 @NgModule({
     declarations: [
@@ -24,8 +39,19 @@ import { AsideNavService } from "./_services/aside-nav.service";
         AppRoutingModule,
         ThemeRoutingModule,
         AuthModule,
+        AppConfigModule,
+        FormsModule,
     ],
-    providers: [ScriptLoaderService, AsideNavService],
+    providers: [
+        ScriptLoaderService, 
+        AsideNavService,
+        AlertService,
+        ApiService,
+        //AuthService,
+        //AuthGuard,
+        UserService,
+        LocalStorageService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@
 				<div class="m-login__content">
 					<div class="m-login__logo">
 						<a href="#">
-							<img src="./assets/app/media/img//logos/logo-2.png">
+							<!--<img src="http://demo.mycatool.com/assets/global/images/logo/mycatool-logo.png">-->
 						</a>
 					</div>
 					<div class="m-login__title">
@@ -39,7 +39,7 @@
 				<form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="m-login__form m-form" action="">
 					<ng-template #alertSignin></ng-template>
 					<div class="form-group m-form__group">
-						<input class="form-control m-input" type="text" placeholder="Username" name="username" [(ngModel)]="model.username" #username="ngModel" autocomplete="off">
+						<input class="form-control m-input" type="text" placeholder="Username" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
 					</div>
 					<div class="form-group m-form__group">
 						<input class="form-control m-input m-login__form-input--last" type="Password" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel">

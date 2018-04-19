@@ -10,6 +10,26 @@ const routes: Routes = [
         "canActivate": [AuthGuard],
         "children": [
             {
+                "path": "user",
+                "loadChildren": "..\/user\/user.module#UserModule"
+            },
+            {
+                "path": "causer",
+                 "loadChildren": ".\/..\/modules\/causer\/causer.module#CauserModule"
+            },
+            {
+                "path": "emailprofile",
+                 "loadChildren": ".\/..\/modules\/emailprofile\/emailprofile.module#EmailprofileModule"
+            },
+            {
+                "path": "emailtemplate",
+                 "loadChildren": ".\/..\/modules\/emailtemplate\/emailtemplate.module#EmailtemplateModule"
+            },
+            {
+                "path": "profile",
+                 "loadChildren": ".\/..\/modules\/profile\/profile.module#ProfileModule"
+            },
+            {
                 "path": "angular\/ng-bootstrap",
                 "loadChildren": ".\/pages\/default\/angular\/ng-bootstrap\/ng-bootstrap.module#NgBootstrapModule"
             },

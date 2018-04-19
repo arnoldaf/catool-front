@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Headers, Http, RequestOptions, Response } from "@angular/http";
 
 import { User } from "../_models/index";
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UserService {
@@ -9,7 +10,7 @@ export class UserService {
     }
 
     verify() {
-        return this.http.get('/api/verify', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(environment.apiEndpoint+'/api/v1/verify', this.jwt()).map((response: Response) => response.json());
     }
 
     forgotPassword(email: string) {

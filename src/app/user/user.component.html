@@ -1,0 +1,393 @@
+<!-- BEGIN: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Manage Users
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a href="#" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" (click)="goBack()" class="m-nav__link" >
+                        <span class="m-nav__link-text">
+                            Users
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__separator">
+                    -
+                </li>
+
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link" (click)="addUser()">
+                        <span class="m-nav__link-text">
+                            Add User
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" data-dropdown-toggle="hover" aria-expanded="true">
+                <a href="#" class="m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                    <i class="la la-plus m--hide"></i>
+                    <i class="la la-ellipsis-h"></i>
+                </a>
+                <div class="m-dropdown__wrapper">
+                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                    <div class="m-dropdown__inner">
+                        <div class="m-dropdown__body">
+                            <div class="m-dropdown__content">
+                                <ul class="m-nav">
+                                    <li class="m-nav__section m-nav__section--first m--hide">
+                                        <span class="m-nav__section-text">
+                                            Quick Actions
+                                        </span>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-share"></i>
+                                            <span class="m-nav__link-text">
+                                                Activity
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-chat-1"></i>
+                                            <span class="m-nav__link-text">
+                                                Messages
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-info"></i>
+                                            <span class="m-nav__link-text">
+                                                FAQ
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__item">
+                                        <a href="" class="m-nav__link">
+                                            <i class="m-nav__link-icon flaticon-lifebuoy"></i>
+                                            <span class="m-nav__link-text">
+                                                Support
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="m-nav__separator m-nav__separator--fit"></li>
+                                    <li class="m-nav__item">
+                                        <a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
+                                            Submit
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+<ng-container *ngIf="addView">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <!--begin::Portlet-->
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    CREATE NEW USER
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+            <!--        
+                <form [formGroup]="addFormGroup" (ngSubmit)="addFormSubmit()">
+
+                <div class="input-field col s12">
+                    <input id="ui_title" type="text" class="validate" formControlName="email" [(ngModel)]="userData.email">
+                    <label for="ui_title">User Email</label> {{userData.email}} 
+                </div>
+
+                
+
+                <div class="col s12">
+                    <a class="btn-floating btn-sm waves-effect waves-light red" (click)="goBack()">
+                        <i class="material-icons">arrow_back</i>Go Back</a>
+                    <button class="btn waves-effect waves-light" type="submit" style='margin-left: 10px;'>
+                        <i class="material-icons">add</i> Add
+                    </button>
+                </div>
+
+            </form> -->
+                    
+
+                    <!--begin::Form-->
+                    
+                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addFormGroup" (ngSubmit)="addFormSubmit()">
+                        <div class="m-portlet__body">
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label>
+                                        First Name:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter first name" formControlName="firstname" [(ngModel)]="userData.firstname">
+                                    <span class="m-form__help">
+                                        Please enter your first name
+                                    </span> {{userData.firstname}}
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="">
+                                        Last Name:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter last name" formControlName="lastname" [(ngModel)]="userData.lastname">
+                                    <span class="m-form__help">
+                                        Please enter your last name
+                                    </span> {{userData.lastname}} 
+                                </div>
+                            </div>
+                            <div class="form-group m-form__group row">
+
+
+                                <div class="col-lg-6">
+                                    <label>
+                                        Email Address
+                                    </label>
+                                     
+                                    <input type="text" class="form-control m-input" placeholder="Enter email" formControlName="email" [(ngModel)]="userData.email">
+                                    {{userData.email}} 
+                                    
+                                    <span class="m-form__help">
+                                        Please enter your email address
+                                    </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="">
+                                        Client Type: 
+                                    </label>
+                                    
+                                    <select class="form-control m-input" name="option">
+                                            <option value="">
+                                                    Select
+                                            </option>
+                                            <option>
+                                                    1
+                                            </option>
+                                            <option>
+                                                    2
+                                            </option>
+                                            <option>
+                                                    3
+                                            </option>
+                                            <option>
+                                                    4
+                                            </option>
+                                            <option>
+                                                    5
+                                            </option>
+                                    </select>
+                                    
+                                    <input type="text" class="form-control m-input" placeholder="Select client type"  formControlName="client_type" [(ngModel)]="userData.client_type">
+                                    <span class="m-form__help">
+                                        Choose client type
+                                        {{userData.client_type}} 
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label>
+                                        Phone Number:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter phone number" formControlName="phonenumber" [(ngModel)]="userData.phonenumber">
+                                    <span class="m-form__help">
+                                        Please enter your phone number
+                                    </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="">
+                                        Upload your avatar:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter avatar:"  formControlName="profilepic" [(ngModel)]="userData.profilepic">
+                                    <span class="m-form__help">
+                                        Please upload your avatar
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group m-form__group row">
+                                <div class="col-lg-6">
+                                    <label>
+                                        Password:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter your password"    formControlName="password" [(ngModel)]="userData.password">
+                                    <span class="m-form__help">
+                                        Please enter your password:
+                                    </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label class="">
+                                        Repeat your password:
+                                    </label>
+                                    <input type="text" class="form-control m-input" placeholder="Enter your password"   formControlName="passwor_confirmation" [(ngModel)]="userData.passwor_confirmation">
+                                    <span class="m-form__help">
+                                        Please repeat your password
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__no-border m-portlet__foot--fit">
+                            <div class="m-form__actions m-form__actions--solid">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button type="submit" class="btn btn-primary">
+                                            Save
+                                        </button>
+                                        <button type="reset" class="btn btn-secondary">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <!--<div class="col-lg-6 m--align-right">
+                                            <button type="reset" class="btn btn-danger">
+                                                    Delete
+                                            </button>
+                                    </div> -->
+                               </div>
+                            </div>
+                        </div>
+                    </form> 
+                    <!--end::Form-->
+                </div>
+                <!--end::Portlet-->  		<!--begin::Portlet-->
+
+                <!--end::Portlet-->  		<!--begin::Portlet-->
+
+                <!--end::Portlet-->  		<!--begin::Portlet-->
+
+                <!--end::Portlet-->
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="listView">
+    <div class="m-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <!--begin::Portlet-->
+                <!--end::Portlet-->  		<!--begin::Portlet-->
+                <div class="m-portlet">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    Users
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <!--begin::Section-->
+                        <div class="m-section">
+                            <div class="m-section__content">
+                                <table class="table table-striped m-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                Name
+                                            </th>
+                                            <th>
+                                                Type
+                                            </th>
+                                            <th>
+                                                Phone
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            
+                                            <th>
+                                                Status
+                                            </th>
+                                            <th>
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let bill of userList; let i = index;">
+                                            <th scope="row">
+                                                {{userList[i].id}}
+                                            </th>
+                                            <td>
+                                                {{userList[i].first_name}} {{userList[i].last_name}}
+                                            </td>
+                                            <td>
+                                                Individual
+                                            </td>
+                                            <td>
+                                                {{userList[i].mobile}}
+                                            </td>
+                                            <td>
+                                                {{userList[i].email}}
+                                            </td>
+                                            
+                                            <td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--success m-badge--wide">Active</span></span></td>
+                                            <td data-field="Actions" class="m-datatable__cell">
+                                                <span style="overflow: visible; width: 110px;">
+                                                    <div class="dropdown " style="float: left;">	
+                                                        <a href="#" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+                                                            <i class="la la-ellipsis-h"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
+                                                             <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
+                                                             <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
+                                                         </div>
+                                                    </div>
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details" (click)="editUser(userList[i].id)"><i class="la la-edit"></i></a>
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete" (click)="deleteUser(userList[i].id)">
+                                                    <i class="la la-trash"></i></a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--end::Section-->
+                    </div>
+                    <!--end::Form-->
+                </div>
+                <!--end::Portlet--> 
+
+                <!--end::Portlet-->  		<!--begin::Portlet-->
+
+                <!--end::Portlet-->
+            </div>
+        </div>
+    </div>
+</ng-container>

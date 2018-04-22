@@ -9,15 +9,7 @@ import { environment } from '../../environments/environment';
 //const httpOptions = {
    // headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 //};
-var token = '';
-var currentUser = localStorage.getItem('currentUser');
-if(currentUser != null) {
-var obj = JSON.parse(currentUser);
-token = obj.data.token;
-}
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : 'Bearer '+token})
-};
+
 
 
 
@@ -29,6 +21,17 @@ export class AsideNavService {
     constructor(private http: HttpClient) { }
 
     getAsideNav(): Observable<any> {
+        
+        var token = '';
+        var currentUser = localStorage.getItem('currentUser');
+        if(currentUser != null) {
+        var obj = JSON.parse(currentUser);
+        token = obj.data.token;
+        }
+        let httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : 'Bearer '+token})
+        };
+
         return this.http.get(this.navUrl, httpOptions)
             .pipe(
             tap(asideNav => this.log(`fetched menu`)),

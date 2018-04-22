@@ -20,7 +20,7 @@ export class AsideNavComponent implements OnInit, AfterViewInit {
 
     getAsideNav(): void {
         this.asideNavService.getAsideNav()
-            .subscribe(asideNavMenus => this.asideNavMenus = asideNavMenus);
+            .subscribe(asideNavMenus => this.asideNavMenus = asideNavMenus.data);
     }
     ngAfterViewInit() {
 

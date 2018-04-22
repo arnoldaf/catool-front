@@ -6,7 +6,9 @@
 	<!-- BEGIN: Aside Menu -->
 	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" data-menu-vertical="true" 		 data-menu-scrollable="false" data-menu-dropdown-timeout="500"   		>
 		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
-			<li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+			
+                        <!--
+                        <li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
 				<a  routerLink="/index" class="m-menu__link">
 					<i class="m-menu__link-icon flaticon-line-graph"></i>
 					<span class="m-menu__link-title">
@@ -62,113 +64,7 @@
 					</ul>
 				</div>
 			</li>
-                        
-                        
-                        <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--open" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true"  data-menu-submenu-toggle="hover">
-				<a  href="#" class="m-menu__link m-menu__toggle">
-					<i class="m-menu__link-icon flaticon-users"></i>
-					<span class="m-menu__link-text">
-						CA Manager
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<span class="m-menu__link">
-								<span class="m-menu__link-text">
-									Manage CA
-								</span>
-							</span>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/causer" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Manage CA
-								</span>
-							</a>
-						</li> 
-                                                <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/causer" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Add CA
-								</span>
-							</a>
-						</li> 
-                                                
-                                                <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/profile" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									My Profile
-								</span>
-							</a>
-						</li> 
-					</ul>
-				</div>
-			</li>
-                        
-                        
-                        <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--open" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true"  data-menu-submenu-toggle="hover">
-				<a  href="#" class="m-menu__link m-menu__toggle">
-					<i class="m-menu__link-icon flaticon-settings"></i>
-					<span class="m-menu__link-text">
-						Settings
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<span class="m-menu__link">
-								<span class="m-menu__link-text">
-									Email Template
-								</span>
-							</span>
-						</li>
-                                                <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/emailtemplate" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Manage Email Template
-								</span>
-							</a>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/header/actions" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Add Email Template
-								</span>
-							</a>
-						</li> 
-                                                <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/emailprofile" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Email Profile Settings
-								</span>
-							</a>
-						</li> 
-					</ul>
-				</div>
-			</li>
+                         -->
                         
                         
 			<li *ngFor="let menu of asideNavMenus" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true"  data-menu-submenu-toggle="hover">
@@ -176,7 +72,7 @@
 					<i class="m-menu__link-icon {{menu.icon_name}}"></i>
 					<span class="m-menu__link-text">
 						{{menu.name}}
-					</span>
+					</span> 
 				</a>
 
 				<a *ngIf="menu.sub_menu.length > 0" href="javascript:void(0)" class="m-menu__link m-menu__toggle">
@@ -190,37 +86,24 @@
 				<div *ngIf="menu.sub_menu.length > 0" class="m-menu__submenu">
 					<span class="m-menu__arrow"></span>
 					<ul class="m-menu__subnav">
-
+                                                <li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<span class="m-menu__link">
+								<span class="m-menu__link-text">
+									Manage Clientspk
+								</span>
+							</span>
+						</li>
+                                                
 						<li *ngFor="let submenu of menu.sub_menu" class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
 							<a  routerLink="{{submenu.url}}" class="m-menu__link">
 								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
 									<span></span>
 								</i>
 								<span class="m-menu__link-text">
-									{{submenu.name}} ppp
+									{{submenu.name}} 
 								</span>
 							</a>
-                                                    
-                                                    <a  routerLink="/components/forms/validation/form-controls" class="m-menu__link">
-											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-												<span></span>
-											</i>
-											<span class="m-menu__link-text">
-												Form Controls
-											</span>
-						   </a>
-                                                   <a  routerLink="/users" class="m-menu__link">
-											<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-												<span></span>
-											</i>
-											<span class="m-menu__link-text">
-												Form Controls  ddd
-											</span>
-						   </a>
-                                                    
-                                                    
 						</li>
-
 					</ul>
 				</div>
 			</li>

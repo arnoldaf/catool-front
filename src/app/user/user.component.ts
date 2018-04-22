@@ -174,7 +174,7 @@ export class UserComponent implements AfterViewInit, OnInit {
                     console.log(res);
                     if ((res.status_code >= 200 && res.status_code < 300)) {
                         this.isListLoading = false;
-                        this.userList = res.data.data;
+                        this.userList = res.data;
                         //this.roles = res.data.roles;
                         //this.languages = res.data.languages;
                         //this.alertService.displayLoader(false);

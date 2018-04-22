@@ -171,13 +171,11 @@ export class UserComponent implements AfterViewInit, OnInit {
         this.apiService.makeReq('getUsers', {method: 'Get', 'currentPage': this.currentPage})
             .subscribe((res) => {
                 try {
-                    console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300)) {
+                    
+                    if ((res.error == null )) {
                         this.isListLoading = false;
                         this.userList = res.data;
-                        //this.roles = res.data.roles;
-                        //this.languages = res.data.languages;
-                        //this.alertService.displayLoader(false);
+                        
                         return true;
                     }
                 } catch (error) {

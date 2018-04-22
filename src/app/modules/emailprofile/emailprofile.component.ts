@@ -172,7 +172,7 @@ export class EmailprofileComponent implements AfterViewInit, OnInit {
             .subscribe((res) => {
                 try {
                     console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300)) {
+                    if (res.error == null) {
                         this.isListLoading = false;
                         this.userList = res.data;
                         //this.roles = res.data.roles;

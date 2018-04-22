@@ -146,7 +146,7 @@ export class UserComponent implements AfterViewInit, OnInit {
                 //this.alertService.displayLoader(false);
                 try {
                 console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300) && res.result==true) {
+                    if (res.error == null) {
                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
                        this.getUserList();
                        this.goBack();

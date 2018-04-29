@@ -7,7 +7,7 @@
 	<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" data-menu-vertical="true" 		 data-menu-scrollable="false" data-menu-dropdown-timeout="500"   		>
 		<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow">
 			
-                        <!--
+                        
                         <li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
 				<a  routerLink="/index" class="m-menu__link">
 					<i class="m-menu__link-icon flaticon-line-graph"></i>
@@ -21,52 +21,6 @@
 					</span>
 				</a>
 			</li>
-                        
-                        
-                        <li class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item--open" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true"  data-menu-submenu-toggle="hover">
-				<a  href="#" class="m-menu__link m-menu__toggle">
-					<i class="m-menu__link-icon flaticon-users"></i>
-					<span class="m-menu__link-text">
-						Client Manager
-					</span>
-					<i class="m-menu__ver-arrow la la-angle-right"></i>
-				</a>
-				<div class="m-menu__submenu">
-					<span class="m-menu__arrow"></span>
-					<ul class="m-menu__subnav">
-						<li class="m-menu__item  m-menu__item--parent" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<span class="m-menu__link">
-								<span class="m-menu__link-text">
-									Manage Clients
-								</span>
-							</span>
-						</li>
-						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/user" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Manage Clients
-								</span>
-							</a>
-						</li> 
-                                                <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
-							<a  routerLink="/components/forms/validation/form-controls" class="m-menu__link">
-								<i class="m-menu__link-bullet m-menu__link-bullet--dot">
-									<span></span>
-								</i>
-								<span class="m-menu__link-text">
-									Add Clients
-								</span>
-							</a>
-						</li> 
-					</ul>
-				</div>
-			</li>
-                         -->
-                        
-                        
 			<li *ngFor="let menu of asideNavMenus" class="m-menu__item  m-menu__item--submenu" routerLinkActive="m-menu__item" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true"  data-menu-submenu-toggle="hover">
 				<a *ngIf="menu.sub_menu.length == 0 " routerLink="{{menu.url}}" class="m-menu__link m-menu__toggle">
 					<i class="m-menu__link-icon {{menu.icon_name}}"></i>

@@ -41,10 +41,17 @@ export class UserService {
 
     private jwt() {
         // create authorization header with jwt token
+
+        let headers = new Headers({ 'domain': location.hostname });
+        return new RequestOptions({ headers: headers });
+        /*
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser && currentUser.token) {
-            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token });
+            let headers = new Headers({ 'Authorization': 'Bearer ' + currentUser.token});
             return new RequestOptions({ headers: headers });
-        }
+        } else {
+            let headers = new Headers({ 'domain': 'abc1.com' });
+            return new RequestOptions({ headers: headers });
+        } */
     }
 }

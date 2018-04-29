@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutModule } from '../../theme/layouts/layout.module';
 import { DefaultComponent } from '../../theme/pages/default/default.component';
-import { EmailtemplateComponent } from './emailtemplate.component';
+import { VendorComponent } from './vendor.component';
 import { FormsModule, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
         'children': [
             {
                 'path': '',
-                'component': EmailtemplateComponent,
+                'component': VendorComponent,
             },
         ],
     },
@@ -27,8 +27,8 @@ const routes: Routes = [
     ], exports: [
         RouterModule,
     ], declarations: [
-        EmailtemplateComponent,
+        VendorComponent,
     ],
 })
-export class EmailtemplateModule {
+export class VendorModule {
 }

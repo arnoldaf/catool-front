@@ -5,7 +5,7 @@ import { ApiService } from './api.service';
 import { AlertService } from './alert.service';
 //import { LocalStorageService } from './local-storage.service';
 @Injectable()
-export class UserService {
+export class VendorBillingService {
 
 
     private _subject = new Subject<any>();

@@ -21,6 +21,8 @@ import {ApiService} from './services/api.service';
 //import {AuthGuard} from './guards/auth.guard';
 //import {AuthService} from './services/auth.service';
 import {UserService} from './services/user.service';
+import {VendorService} from './services/vendor.service';
+import {VendorBillingService} from './services/vendorbilling.service';
 import {LocalStorageService} from './services/local-storage.service';
 import {FormsModule, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
@@ -51,6 +53,8 @@ import {AppConfigModule} from './config/app-config.module';
         //AuthService,
         //AuthGuard,
         UserService,
+		VendorService,
+		VendorBillingService,
         LocalStorageService,
         AppHttpService
     ],

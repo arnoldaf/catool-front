@@ -1,5 +1,5 @@
-import {NgModule, InjectionToken} from '@angular/core';
-import {Validators} from '@angular/forms';
+import { NgModule, InjectionToken } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
 
 export let APP_CONFIG = new InjectionToken<AppConfig>('app.config');
@@ -16,11 +16,13 @@ export class AppConfig {
 
 export const APP_DI_CONFIG: AppConfig = {
     //API_END_POINT: "http://127.0.0.1:8000/api/v1/",
-    API_END_POINT: environment.apiEndpoint+ '/api/v1/' ,
+    API_END_POINT: environment.apiEndpoint + '/api/v1/',
     API_URLS: {
         user: 'user',
         getUsers: 'getUsers',
-        
+		vendor : 'vendor',
+		vendorBilling : 'vendorBilling',
+
     },
     //To display time duration for all Alert, Notification Messages
     ALERT_DISPLAY_TIME: 4000, //4 Seconds
@@ -55,4 +57,4 @@ export const APP_DI_CONFIG: AppConfig = {
         useValue: APP_DI_CONFIG
     }]
 })
-export class AppConfigModule {}
+export class AppConfigModule { }

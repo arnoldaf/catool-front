@@ -1,20 +1,20 @@
-import {Component, OnInit, Inject, ViewChild, Input, AfterViewInit, ViewEncapsulation,EventEmitter} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {UserService} from '../../services/user.service';
+import { Component, OnInit, Inject, ViewChild, Input, AfterViewInit, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 
-import {ApiService} from '../../services/api.service';
-import {AlertService} from '../../services/alert.service';
+import { ApiService } from '../../services/api.service';
+import { AlertService } from '../../services/alert.service';
 //import {AuthService} from '../../services/auth.service';
 
 @Component({
-  selector: '.m-wrapper',
-  templateUrl: './profile.component.html',
-  encapsulation: ViewEncapsulation.None,
+    selector: '.m-wrapper',
+    templateUrl: './profile.component.html',
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class ProfileComponent implements AfterViewInit, OnInit {
-    addFormGroup:  FormGroup;
+    addFormGroup: FormGroup;
     editFormGroup: FormGroup;
     listView = true;
     testing = 'this is a test'
@@ -38,41 +38,41 @@ export class ProfileComponent implements AfterViewInit, OnInit {
     isListLoading = true;
     currentPage = 0;
     options: [
-            { key: '1', name: 'Enable' },
-            { key: '0', name: 'Disable' }
-        ];
-    
+        { key: '1', name: 'Enable' },
+        { key: '0', name: 'Disable' }
+    ];
+
     @Input() password = '';
     @Input() name = '';
     @Input() id = '';
     @Input() status = '';
     @ViewChild('edit') edit;
-     
-    
-    @ViewChild('add') add;
-     
-    
-    constructor(
-         private fb: FormBuilder,
-          private apiService: ApiService,
-          private alertService: AlertService,
-          private userService: UserService,
-         // private authService: AuthService,
-         // private router: Router,
-        
-    ) {
-       // translate.addLangs(['en', 'fr', 'ur']);
-       // translate.setDefaultLang('en');
 
-       // const browserLang = translate.getBrowserLang();
-       // translate.use(browserLang.match(/en|fr|ur/) ? browserLang : 'en');
+
+    @ViewChild('add') add;
+
+
+    constructor(
+        private fb: FormBuilder,
+        private apiService: ApiService,
+        private alertService: AlertService,
+        private userService: UserService,
+        // private authService: AuthService,
+        // private router: Router,
+
+    ) {
+        // translate.addLangs(['en', 'fr', 'ur']);
+        // translate.setDefaultLang('en');
+
+        // const browserLang = translate.getBrowserLang();
+        // translate.use(browserLang.match(/en|fr|ur/) ? browserLang : 'en');
     };
 
     ngOnInit() {
-       
-      this.getUserList();
-      this.formGenerate();
-      
+
+        this.getUserList();
+        this.formGenerate();
+
     }
 
     ngAfterViewInit() {
@@ -83,10 +83,10 @@ export class ProfileComponent implements AfterViewInit, OnInit {
         this.registerMsg = false;
     }
 
-    userData = {email: '',firstname: '',lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: ''};
-    
+    userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+
     formGenerate() {
-        
+
         this.addFormGroup = this.fb.group({
             email: [this.userData.email, [Validators.required]],
             firstname: [this.userData.firstname, [Validators.required]],
@@ -113,47 +113,47 @@ export class ProfileComponent implements AfterViewInit, OnInit {
             id: [this.id, [Validators.required]]
         });
         */
-        
+
     }
-    
-    
-    
-    setValue(value: {[key: string]: any}, {onlySelf, emitEvent}: {onlySelf?: boolean, emitEvent?: boolean} = {}): void {
+
+
+
+    setValue(value: { [key: string]: any }, { onlySelf, emitEvent }: { onlySelf?: boolean, emitEvent?: boolean } = {}): void {
         Object.keys(value).forEach(name => {
             if (this.editFormGroup.get(name) && value[name] != '') {
-                this.editFormGroup.controls[name].setValue(value[name], {onlySelf: true, emitEvent});
+                this.editFormGroup.controls[name].setValue(value[name], { onlySelf: true, emitEvent });
             }
         });
     }
-    
-  
+
+
     addUser() {
         this.listView = false;
         this.addView = true;
         setTimeout(() => {
-           // jQuery('select').material_select();
-           // Materialize.updateTextFields();
+            // jQuery('select').material_select();
+            // Materialize.updateTextFields();
         }, 200);
     }
-    
-    
+
+
     addFormSubmit(data: any): any {
-    
+
         //'Content-Type': 'multipart/form-data'
         //this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', {method: 'Post', body: this.addFormGroup.value })
+        this.apiService.makeReq('getUsers', { method: 'Post', body: this.addFormGroup.value })
             .subscribe((res) => {
                 //this.alertService.displayLoader(false);
                 try {
-                console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300) && res.result==true) {
-                       this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                       this.getUserList();
-                       this.goBack();
-                       this.alertService.displayLoader(false);
-                       return true;
+                    console.log(res);
+                    if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
+                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
+                        this.getUserList();
+                        this.goBack();
+                        this.alertService.displayLoader(false);
+                        return true;
                     } else {
-                    
+
                         this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');
                     }
                 } catch (error) {
@@ -165,10 +165,10 @@ export class ProfileComponent implements AfterViewInit, OnInit {
                 this.alertService.error(error.msg ? error.msg : 'Authentican failed due to some error!');
             });
     }
-    
+
     getUserList() {
         this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', {method: 'Get', 'currentPage': this.currentPage})
+        this.apiService.makeReq('getUsers', { method: 'Get', 'currentPage': this.currentPage })
             .subscribe((res) => {
                 try {
                     console.log(res);
@@ -190,33 +190,33 @@ export class ProfileComponent implements AfterViewInit, OnInit {
                 //this.alertService.displayLoader(false);
             });
     }
-    
-    deleteUser(id){
+
+    deleteUser(id) {
         this.alertService.displayLoader(true);
         var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
         this.apiService.makeReq('getUsers', options)
-        .subscribe((res) => {
-            try {
-                if ((res.status_code >= 200 && res.status_code < 300)) {
-                    this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
+            .subscribe((res) => {
+                try {
+                    if ((res.status_code >= 200 && res.status_code < 300)) {
+                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
+                        this.alertService.displayLoader(false);
+                        this.getUserList();
+                        return true;
+                    }
+                } catch (error) {
                     this.alertService.displayLoader(false);
-                    this.getUserList(); 
-                    return true;
                 }
-            } catch (error) {
-              this.alertService.displayLoader(false);
-            }
-        },
-        (error: any) => {
-            this.alertService.displayLoader(false);
-        });
-    
+            },
+            (error: any) => {
+                this.alertService.displayLoader(false);
+            });
+
     }
-   
+
     goBack() {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-        this.userData = {email: '', firstname: '',lastname: '',name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: ''};
+        this.userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
     }
 }

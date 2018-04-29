@@ -7,11 +7,8 @@ import { AppHttpService } from './app-http.service';
 
 import { environment } from '../../environments/environment';
 //const httpOptions = {
-   // headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+// headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 //};
-
-
-
 
 @Injectable()
 export class AsideNavService {

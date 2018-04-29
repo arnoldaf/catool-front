@@ -33,7 +33,7 @@ export class AuthService {
                 try {
                     if ((res.status_code >= 200 && res.status_code < 300) && res.data && res.data.token) {
                         this.localStorageService.setUserData({
-                             authToken: res.data.token,
+                            authToken: res.data.token,
                             isLogin: 1,
                             username: res.data.username,
                             userRole: res.data.role,
@@ -61,23 +61,23 @@ export class AuthService {
         this.localStorageService.removeItem('userData');
         this.router.navigate(['/login']);
     }
-    
+
     checkLogin() {
         if (this.localStorageService.getUserData('isLogin')) {
             return true;
         }
-        
+
         this.logout();
-        
+
         return false;
     }
-    
+
     alreadyLogin() {
         if (this.localStorageService.getUserData('isLogin')) {
             this.router.navigate(['']);
             return true;
         }
-        
+
         return false;
     }
 
@@ -92,18 +92,18 @@ export class AuthService {
     }
 
     isTokenExpired(error) {
-        
+
         error = (typeof error == 'string') ? JSON.parse(error) : error;
-        
+
         let errorMsg = (typeof error.body != 'undefined') ? error.body : error;
         let msgBag = {
-            'token_expired': 'Session is expired, Please login again', 
-            'token_not_provided': 'Session is expired, Please login again', 
-            'user_not_found': 'Sorry! User not found', 
-            'token_invalid': 'Session is expired, Please login again', 
+            'token_expired': 'Session is expired, Please login again',
+            'token_not_provided': 'Session is expired, Please login again',
+            'user_not_found': 'Sorry! User not found',
+            'token_invalid': 'Session is expired, Please login again',
             'token_absent': 'Session is expired, Please login again'
         };
-        
+
         if (msgBag.hasOwnProperty(errorMsg.error)) {
             this.alertService.error(errorMsg.error ? msgBag[errorMsg.error] : 'Authentication failed due to some error!');
             this.logout();

@@ -10,7 +10,7 @@ export class UserService {
     }
 
     verify() {
-        return this.http.get(environment.apiEndpoint+'/api/v1/verify', this.jwt()).map((response: Response) => response.json());
+        return this.http.get(environment.apiEndpoint + '/api/v1/verify', this.jwt()).map((response: Response) => response.json());
     }
 
     forgotPassword(email: string) {

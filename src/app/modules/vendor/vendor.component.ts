@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, Input, AfterViewInit, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../services/user.service';
+import { VendorService } from '../../services/vendor.service';
 
 import { ApiService } from '../../services/api.service';
 import { AlertService } from '../../services/alert.service';
@@ -9,19 +9,19 @@ import { AlertService } from '../../services/alert.service';
 
 @Component({
     selector: '.m-wrapper',
-    templateUrl: './causer.component.html',
+    templateUrl: './vendor.component.html',
     encapsulation: ViewEncapsulation.None,
 })
 
-export class UserComponent implements AfterViewInit, OnInit {
+export class VendorComponent implements AfterViewInit, OnInit {
     addFormGroup: FormGroup;
     editFormGroup: FormGroup;
     listView = true;
     testing = 'this is a test'
     addView = false;
     editView = false;
-    userDetail: any = [];
-    userList: any = [];
+    vendorDetail: any = [];
+    vendorList: any = [];
     languages: any = [];
     roles: any = [];
     selectedRole: any;
@@ -56,7 +56,7 @@ export class UserComponent implements AfterViewInit, OnInit {
         private fb: FormBuilder,
         private apiService: ApiService,
         private alertService: AlertService,
-        private userService: UserService,
+        private vendorService: VendorService,
         // private authService: AuthService,
         // private router: Router,
 
@@ -70,7 +70,7 @@ export class UserComponent implements AfterViewInit, OnInit {
 
     ngOnInit() {
 
-        this.getUserList();
+        this.getVendorList();
         this.formGenerate();
 
     }
@@ -83,37 +83,14 @@ export class UserComponent implements AfterViewInit, OnInit {
         this.registerMsg = false;
     }
 
-    userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+    vendorData = { name: '', gst_number: ''};
 
     formGenerate() {
 
         this.addFormGroup = this.fb.group({
-            email: [this.userData.email, [Validators.required]],
-            firstname: [this.userData.firstname, [Validators.required]],
-            lastname: [this.userData.lastname, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
-            password: [this.userData.password, [Validators.required]],
-            passwor_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            client_type: [this.userData.client_type, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
-            status: [this.userData.status, [Validators.required]],
-            phonenumber: [this.userData.phonenumber, [Validators.required]],
-            profilepic: [this.userData.profilepic, [Validators.required]],
+            name: [this.vendorData.name, [Validators.required]],
+            gst_number: [this.vendorData.gst_number, [Validators.required]],
         });
-        /*
-        this.editFormGroup = this.fb.group({
-            email: [this.userData.email, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
-            password: [this.userData.password, [Validators.required]],
-            password_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
-            status: [this.selectedStatus, [Validators.required]],
-            id: [this.id, [Validators.required]]
-        });
-        */
-
     }
 
 
@@ -127,7 +104,7 @@ export class UserComponent implements AfterViewInit, OnInit {
     }
 
 
-    addUser() {
+    addVendor() {
         this.listView = false;
         this.addView = true;
         setTimeout(() => {
@@ -141,14 +118,14 @@ export class UserComponent implements AfterViewInit, OnInit {
 
         //'Content-Type': 'multipart/form-data'
         //this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Post', body: this.addFormGroup.value })
+        this.apiService.makeReq('vendor', { method: 'Post', body: this.addFormGroup.value })
             .subscribe((res) => {
                 //this.alertService.displayLoader(false);
                 try {
                     console.log(res);
                     if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
                         this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                        this.getUserList();
+                        this.getVendorList();
                         this.goBack();
                         this.alertService.displayLoader(false);
                         return true;
@@ -166,15 +143,15 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
     }
 
-    getUserList() {
+    getVendorList() {
         this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Get', 'currentPage': this.currentPage })
+        this.apiService.makeReq('vendor', { method: 'Get', 'currentPage': this.currentPage })
             .subscribe((res) => {
                 try {
                     
                     if ((res.error == null )) {
                         this.isListLoading = false;
-                        this.userList = res.data;
+                        this.vendorList = res.data;
                         
                         return true;
                     }
@@ -189,16 +166,16 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
     }
 
-    deleteUser(id) {
+    deleteVendor(id) {
         this.alertService.displayLoader(true);
         var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
-        this.apiService.makeReq('getUsers', options)
+        this.apiService.makeReq('getVendors', options)
             .subscribe((res) => {
                 try {
                     if ((res.status_code >= 200 && res.status_code < 300)) {
                         this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
                         this.alertService.displayLoader(false);
-                        this.getUserList();
+                        this.getVendorList();
                         return true;
                     }
                 } catch (error) {
@@ -215,6 +192,6 @@ export class UserComponent implements AfterViewInit, OnInit {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-        this.userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+        this.vendorData = { name: '', gst_number: '' };
     }
 }

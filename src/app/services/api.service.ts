@@ -22,7 +22,7 @@ export class ApiService {
         private localStorageService: LocalStorageService,
         private router: Router
     ) { }
-    
+
     /*
      * Method makeReq
      * @paran urlKey: string
@@ -50,7 +50,7 @@ export class ApiService {
                 return this.handleError(error);
             });
     }
-    
+
     /*---------------- private helper methods---------------------------*/
     /*
      * Method handleError
@@ -94,17 +94,17 @@ export class ApiService {
         }
         // Accept-Language
         if (options['Accept-Language']) {
-           headers.append('Accept-Language', options['Accept-Language']); // Desired Accept-Language
+            headers.append('Accept-Language', options['Accept-Language']); // Desired Accept-Language
         }
         // Content-Language
         if (options['Content-Language']) {
-           headers.append('Content-Language', options['Content-Language']); // Desired Content-Language
+            headers.append('Content-Language', options['Content-Language']); // Desired Content-Language
         }
         // Content-Type
         if (options['Content-Type']) {
-           headers.append('Content-Type', options['Content-Type']); // Desired Content-Type
+            headers.append('Content-Type', options['Content-Type']); // Desired Content-Type
         } else {
-           headers.append('Content-Type', 'application/json'); // Default
+            headers.append('Content-Type', 'application/json'); // Default
         }
         // DPR
         if (options['DPR']) {
@@ -124,14 +124,14 @@ export class ApiService {
         }
         // Width
         if (options['Width']) {
-           headers.append('Width', options['Width']); // Desired Viewport-Width
+            headers.append('Width', options['Width']); // Desired Viewport-Width
         }
         // add authentication token
-         var currentUser = localStorage.getItem('currentUser');
-         var obj = JSON.parse(currentUser);
-         //headers.append('Authorization', 'Bearer ' + this.localStorageService.getUserData('authToken'));
-         headers.append('Authorization', 'Bearer ' + obj.data.token);
-         return headers;
+        var currentUser = localStorage.getItem('currentUser');
+        var obj = JSON.parse(currentUser);
+        //headers.append('Authorization', 'Bearer ' + this.localStorageService.getUserData('authToken'));
+        headers.append('Authorization', 'Bearer ' + obj.data.token);
+        return headers;
     }
     /*
      * Method getUrl
@@ -192,12 +192,12 @@ export class ApiService {
                     }
                 }
             };
-            xhr.addEventListener('error', function (event) {
-                 //console.log('Oups! files something went wrong.');
+            xhr.addEventListener('error', function(event) {
+                //console.log('Oups! files something went wrong.');
             });
             // Define what happens on successful data submission
-            xhr.addEventListener('load', function (event) {
-                 //console.log('Yeah! Image sent and response loaded.');
+            xhr.addEventListener('load', function(event) {
+                //console.log('Yeah! Image sent and response loaded.');
             });
 
             xhr.upload.onprogress = (event) => {
@@ -220,7 +220,7 @@ export class ApiService {
             xhr.open('GET', this.getUrl(urlKey, options), true);
             xhr.setRequestHeader('Authorization', 'Bearer ' + this.localStorageService.getUserData('authToken'));
             xhr.responseType = 'blob';
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     if (xhr.status === 200) {
                         let a = document.createElement('a');

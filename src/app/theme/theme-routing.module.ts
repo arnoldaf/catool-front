@@ -9,25 +9,33 @@ const routes: Routes = [
         "component": ThemeComponent,
         "canActivate": [AuthGuard],
         "children": [
+			{
+                "path": "vendor",
+                "loadChildren": ".\/..\/modules\/vendor\/vendor.module#VendorModule"
+            },
+			{
+                "path": "vendor/billing",
+                "loadChildren": ".\/..\/modules\/vendorbilling\/vendorbilling.module#VendorBillingModule"
+            },
             {
                 "path": "user",
                 "loadChildren": "..\/user\/user.module#UserModule"
             },
             {
                 "path": "causer",
-                 "loadChildren": ".\/..\/modules\/causer\/causer.module#CauserModule"
+                "loadChildren": ".\/..\/modules\/causer\/causer.module#CauserModule"
             },
             {
                 "path": "emailprofile",
-                 "loadChildren": ".\/..\/modules\/emailprofile\/emailprofile.module#EmailprofileModule"
+                "loadChildren": ".\/..\/modules\/emailprofile\/emailprofile.module#EmailprofileModule"
             },
             {
                 "path": "emailtemplate",
-                 "loadChildren": ".\/..\/modules\/emailtemplate\/emailtemplate.module#EmailtemplateModule"
+                "loadChildren": ".\/..\/modules\/emailtemplate\/emailtemplate.module#EmailtemplateModule"
             },
             {
                 "path": "profile",
-                 "loadChildren": ".\/..\/modules\/profile\/profile.module#ProfileModule"
+                "loadChildren": ".\/..\/modules\/profile\/profile.module#ProfileModule"
             },
             {
                 "path": "angular\/ng-bootstrap",

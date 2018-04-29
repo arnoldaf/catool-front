@@ -32,8 +32,8 @@ import { UserService } from './_services/user.service';
         AuthenticationService,
         UserService,
         // api backend simulation
-       // fakeBackendProvider,
-       // MockBackend,
+        // fakeBackendProvider,
+        // MockBackend,
         BaseRequestOptions,
     ],
     entryComponents: [AlertComponent],

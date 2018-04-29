@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 //apiEndpoint: 'http://127.0.0.1:8000'
 //apiEndpoint: 'http://ca1.mycatool.com'
-export const environment = { 
+export const environment = {
     production: false,
     apiEndpoint: 'http://127.0.0.1:8000',
     baseUrl: './assets/api-response'

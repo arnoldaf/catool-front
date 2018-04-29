@@ -145,15 +145,7 @@ export class UserComponent implements AfterViewInit, OnInit {
             .subscribe((res) => {
                 //this.alertService.displayLoader(false);
                 try {
-<<<<<<< Updated upstream
-                console.log(res);
-                    if (res.error == null) {
-                       this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                       this.getUserList();
-                       this.goBack();
-                       this.alertService.displayLoader(false);
-                       return true;
-=======
+
                     console.log(res);
                     if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
                         this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
@@ -161,7 +153,7 @@ export class UserComponent implements AfterViewInit, OnInit {
                         this.goBack();
                         this.alertService.displayLoader(false);
                         return true;
->>>>>>> Stashed changes
+
                     } else {
 
                         this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');

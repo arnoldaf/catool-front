@@ -28,9 +28,7 @@ export class VendorComponent implements AfterViewInit, OnInit {
     selectedLanguage: any;
     selectedStatus: any;
     role_name: any;
-    email: any;
-    firstname: any;
-    lastname: any;
+    name: any;
     registerMsg = false;
     registerFrmErr = {};
     modalReference: any;
@@ -42,10 +40,6 @@ export class VendorComponent implements AfterViewInit, OnInit {
         { key: '0', name: 'Disable' }
     ];
 
-    @Input() password = '';
-    @Input() name = '';
-    @Input() id = '';
-    @Input() status = '';
     @ViewChild('edit') edit;
 
 
@@ -57,22 +51,14 @@ export class VendorComponent implements AfterViewInit, OnInit {
         private apiService: ApiService,
         private alertService: AlertService,
         private vendorService: VendorService,
-        // private authService: AuthService,
-        // private router: Router,
 
     ) {
-        // translate.addLangs(['en', 'fr', 'ur']);
-        // translate.setDefaultLang('en');
-
-        // const browserLang = translate.getBrowserLang();
         // translate.use(browserLang.match(/en|fr|ur/) ? browserLang : 'en');
     };
 
     ngOnInit() {
-
         this.getVendorList();
         this.formGenerate();
-
     }
 
     ngAfterViewInit() {
@@ -83,16 +69,19 @@ export class VendorComponent implements AfterViewInit, OnInit {
         this.registerMsg = false;
     }
 
-    vendorData = { name: '', gst_number: ''};
+    vendorData = { name: '', gst_number: '', id: ''};
 
     formGenerate() {
-
         this.addFormGroup = this.fb.group({
             name: [this.vendorData.name, [Validators.required]],
             gst_number: [this.vendorData.gst_number, [Validators.required]],
         });
+         this.editFormGroup = this.fb.group({
+            name: [this.vendorData.name, [Validators.required]],
+            gst_number: [this.vendorData.gst_number, [Validators.required]],
+            id: [this.vendorData.id, [Validators.required]]
+        });
     }
-
 
 
     setValue(value: { [key: string]: any }, { onlySelf, emitEvent }: { onlySelf?: boolean, emitEvent?: boolean } = {}): void {
@@ -107,34 +96,62 @@ export class VendorComponent implements AfterViewInit, OnInit {
     addVendor() {
         this.listView = false;
         this.addView = true;
-        setTimeout(() => {
-            // jQuery('select').material_select();
-            // Materialize.updateTextFields();
-        }, 200);
+        this.editView = false;
     }
-
 
     addFormSubmit(data: any): any {
 
-        //'Content-Type': 'multipart/form-data'
-        //this.alertService.displayLoader(true);
-        this.apiService.makeReq('vendor', { method: 'Post', body: this.addFormGroup.value })
-            .subscribe((res) => {
-                //this.alertService.displayLoader(false);
-                try {
-                    console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
-                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                        this.getVendorList();
-                        this.goBack();
-                        this.alertService.displayLoader(false);
-                        return true;
-                    } else {
+        this.apiService.makeReq('vendor', {method: 'Post', body: this.addFormGroup.value })
 
-                        this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');
+            .subscribe((res) => {
+                try {
+
+                    if (res.errors.length == 0) {
+                       this.alertService.success(res.msg ? res.msg : 'Vendor has been added successfully!');
+                       this.getVendorList();
+                       this.goBack();
+                       this.alertService.displayLoader(false);
+                       return true;
+                    } else {
+                         let msg = '';
+                         for(var key in res.errors){
+                            console.log(key + ' - ' + res.errors[key]);
+                            msg = msg + ' <br/>' + res.errors[key];
+                        }
+                        this.alertService.error(msg ? msg : 'Authentican failed due to some error!');
+
                     }
                 } catch (error) {
                     this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');
+                }
+            },
+            (error: any) => {
+                this.alertService.displayLoader(false);
+                this.alertService.error(error.msg ? error.msg : 'Authentican failed due to some error!');
+            });
+    }
+                            
+    editFormSubmit(data: any): any {
+        
+        this.apiService.makeReq('vendor', {method: 'Put', body: this.editFormGroup.value})
+            .subscribe((res) => {
+                
+                try {
+                    if ((res.errors == 0)) {
+                       
+                       this.alertService.success(res.msg ? res.msg : 'VEndor has been updated successfully.');
+                       this.getVendorList();
+                       return true;
+                    } else {
+                        let msg = '';
+                         for(var key in res.errors){
+                            console.log(key + ' - ' + res.errors[key]);
+                            msg = msg + ' <br/>' + res.errors[key];
+                        }
+                        this.alertService.error(msg ? msg : 'Authentican failed due to some error!');
+                    }
+                } catch (error) {
+                    this.alertService.error(res.message ? res.message : 'Authentican failed due to some error!');
                 }
             },
             (error: any) => {
@@ -166,25 +183,53 @@ export class VendorComponent implements AfterViewInit, OnInit {
             });
     }
 
-    deleteVendor(id) {
+    deleteVendor(id){
         this.alertService.displayLoader(true);
         var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
-        this.apiService.makeReq('getVendors', options)
-            .subscribe((res) => {
-                try {
-                    if ((res.status_code >= 200 && res.status_code < 300)) {
-                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                        this.alertService.displayLoader(false);
-                        this.getVendorList();
-                        return true;
-                    }
-                } catch (error) {
-                    this.alertService.displayLoader(false);
+        this.apiService.makeReq('vendor', options)
+        .subscribe((res) => {
+           // alert("Hii");
+            //try {
+                alert(res.errors.length);
+                if ((res.errors.length == 0)) {
+                    this.alertService.success('Vendor has been deleted.');
+                    this.vendorList = [];
+                    this.getVendorList();
+                    return true;
                 }
-            },
-            (error: any) => {
-                this.alertService.displayLoader(false);
-            });
+           /* } catch (error) {
+              this.alertService.displayLoader(false);
+            } */
+        },
+        (error: any) => {
+            this.alertService.displayLoader(false);
+        });
+
+    }
+    
+     editVendor(id) {
+        var options = { 'method': 'Get', 'urlData': id };
+        this.apiService.makeReq('vendor', options)
+            .subscribe((res) => {
+                console.log(res);
+                this.listView = false;
+                this.editView = true;
+                try {
+
+                if ((res.data)) {
+                    this.vendorData.name = res.data.name;
+                    this.vendorData.gst_number = res.data.gst_number;
+                    this.vendorData.id = res.data.id;
+                    //this.setValue(res.data);
+                    return true;
+                }
+            } catch (error) {
+              //alert("Error");
+            }
+        },
+        (error: any) => {
+            this.alertService.displayLoader(false);
+        });
 
     }
 
@@ -192,6 +237,6 @@ export class VendorComponent implements AfterViewInit, OnInit {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-        this.vendorData = { name: '', gst_number: '' };
+        this.vendorData = { name: '', gst_number: '', id: '' };
     }
 }

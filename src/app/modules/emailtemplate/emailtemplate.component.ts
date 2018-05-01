@@ -25,7 +25,8 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
     addView = false;
     editView = false;
     userDetail: any = [];
-    userList: any = [];
+    templateList: any = [];
+    emailGroupList: any = [];
     languages: any = [];
     roles: any = [];
     selectedRole: any;
@@ -33,8 +34,8 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
     selectedStatus: any;
     role_name: any;
     email: any;
-    firstname: any;
-    lastname: any;
+    subject: any;
+    body: any;
     registerMsg = false;
     registerFrmErr = {};
     modalReference: any;
@@ -76,8 +77,8 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
 
 
     ngOnInit() {
-
-        this.getUserList();
+        this.getTemplateList();
+        this.getEmailGroupList();
         this.formGenerate();
 
     }
@@ -92,34 +93,25 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
         this.registerMsg = false;
     }
 
-    userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+    templateData = { email_subject: '', email_body: '', email_to: '', email_cc: '', email_bcc: ''};
 
     formGenerate() {
 
         this.addFormGroup = this.fb.group({
-            email: [this.userData.email, [Validators.required]],
-            firstname: [this.userData.firstname, [Validators.required]],
-            lastname: [this.userData.lastname, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
-            password: [this.userData.password, [Validators.required]],
-            passwor_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            client_type: [this.userData.client_type, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
-            status: [this.userData.status, [Validators.required]],
-            phonenumber: [this.userData.phonenumber, [Validators.required]],
-            profilepic: [this.userData.profilepic, [Validators.required]],
+            email_subject: [this.templateData.email_subject, [Validators.required]],
+            email_body: [this.templateData.email_body, [Validators.required]],
+            email_to: [this.templateData.email_to, [Validators.required]],
+            email_cc: [this.templateData.email_cc, [Validators.required]],
+            email_bcc: [this.templateData.email_bcc, [Validators.required]],
         });
         /*
         this.editFormGroup = this.fb.group({
-            email: [this.userData.email, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
-            password: [this.userData.password, [Validators.required]],
-            password_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
-            status: [this.selectedStatus, [Validators.required]],
-            id: [this.id, [Validators.required]]
+            subject: [this.templateData.subject, [Validators.required]],
+            body: [this.templateData.body, [Validators.required]],
+            to: [this.templateData.to, [Validators.required]],
+            cc: [this.templateData.cc, [Validators.required]],
+            bcc: [this.templateData.bcc, [Validators.required]]
+            id: [this.templateData.id, [Validators.required]]
         });
         */
 
@@ -136,34 +128,34 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
     }
 
 
-    addUser() {
+    addTemplate() {
+        this.getEmailGroupList();
         this.listView = false;
         this.addView = true;
-        setTimeout(() => {
-            // jQuery('select').material_select();
-            // Materialize.updateTextFields();
-        }, 200);
     }
 
 
     addFormSubmit(data: any): any {
 
-        //'Content-Type': 'multipart/form-data'
-        //this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Post', body: this.addFormGroup.value })
-            .subscribe((res) => {
-                //this.alertService.displayLoader(false);
-                try {
-                    console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
-                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
-                        this.getUserList();
-                        this.goBack();
-                        this.alertService.displayLoader(false);
-                        return true;
-                    } else {
+        this.apiService.makeReq('emailtemplate', {method: 'Post', body: this.addFormGroup.value })
 
-                        this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');
+            .subscribe((res) => {
+                try {
+
+                    if (res.errors.length == 0) {
+                       this.alertService.success(res.msg ? res.msg : 'Template has been added successfully!');
+                       this.getTemplateList();
+                       this.goBack();
+                       this.alertService.displayLoader(false);
+                       return true;
+                    } else {
+                         let msg = '';
+                         for(var key in res.errors){
+                            console.log(key + ' - ' + res.errors[key]);
+                            msg = msg + ' <br/>' + res.errors[key];
+                        }
+                        this.alertService.error(msg ? msg : 'Authentican failed due to some error!');
+
                     }
                 } catch (error) {
                     this.alertService.error(res.msg ? res.msg : 'Authentican failed due to some error!');
@@ -175,15 +167,15 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
             });
     }
 
-    getUserList() {
+    getTemplateList() {
         this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Get', 'currentPage': this.currentPage })
+        this.apiService.makeReq('emailtemplate', { method: 'Get', 'currentPage': this.currentPage })
             .subscribe((res) => {
                 try {
                     console.log(res);
                     if (res.error == null) {
                         this.isListLoading = false;
-                        this.userList = res.data;
+                        this.templateList = res.data;
                         //this.roles = res.data.roles;
                         //this.languages = res.data.languages;
                         //this.alertService.displayLoader(false);
@@ -199,17 +191,39 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
                 //this.alertService.displayLoader(false);
             });
     }
+    
+    getEmailGroupList() {
+        this.alertService.displayLoader(true);
+        this.apiService.makeReq('emailgroup', { method: 'Get', 'currentPage': this.currentPage })
+            .subscribe((res) => {
+                try {
+                    console.log(res);
+                    if (res.error == null) {
+                        this.isListLoading = false;
+                        this.emailGroupList = res.data;
+                        return true;
+                    }
+                } catch (error) {
+                    //this.authService.isTokenExpired(error);
+                    //this.alertService.displayLoader(false);
+                }
+            },
+            (error: any) => {
+                //this.authService.isTokenExpired(error);
+                //this.alertService.displayLoader(false);
+            });
+    }
 
-    deleteUser(id) {
+    deleteTemplate(id) {
         this.alertService.displayLoader(true);
         var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
-        this.apiService.makeReq('getUsers', options)
+        this.apiService.makeReq('emailtemplate', options)
             .subscribe((res) => {
                 try {
                     if ((res.status_code >= 200 && res.status_code < 300)) {
                         this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
                         this.alertService.displayLoader(false);
-                        this.getUserList();
+                        this.getTemplateList();
                         return true;
                     }
                 } catch (error) {
@@ -226,6 +240,6 @@ export class EmailtemplateComponent implements AfterViewInit, OnInit {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-        this.userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+        this.templateData = { email_subject: '', email_body: '', email_to: '', email_cc: '', email_bcc: ''};
     }
 }

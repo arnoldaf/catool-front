@@ -17,7 +17,7 @@
                 <li class="m-nav__item">
                     <a href="" (click)="goBack()" class="m-nav__link" >
                         <span class="m-nav__link-text">
-                            Users
+                            Email Template
                         </span>
                     </a>
                 </li>
@@ -26,7 +26,7 @@
                 </li>
 
                 <li class="m-nav__item">
-                    <a href="" class="m-nav__link" (click)="addUser()">
+                    <a href="" class="m-nav__link" (click)="addTemplate()">
                         <span class="m-nav__link-text">
                             Add Email Template
                         </span>
@@ -103,138 +103,108 @@
 
 
 <ng-container *ngIf="addView">
-<div class="m-content">
-	<!--begin::Portlet-->
-	<div class="m-portlet">
-		<div class="m-portlet__head">
-			<div class="m-portlet__head-caption">
-				<div class="m-portlet__head-title">
-					<h3 class="m-portlet__head-text">
-						Create Email Template
-					</h3>
-				</div>
-			</div>
-		</div>
-		<!--begin::Form-->
-		<form class="m-form m-form--fit m-form--label-align-right">
-			<div class="m-portlet__body">
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Subject
-					</label>
-					<div class="col-lg-7 col-md-7 col-sm-12">
-						<input type="text" class="form-control m-input" id="email_subject" name="email_subject" aria-describedby="Subject" placeholder="Enter Email Subject">
-						<span class="m-form__help">
-							Please enter email subject.
-					</span>
-					</div>
-					
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						Body
-					</label>
-					<div class="col-lg-7 col-md-7 col-sm-12">
-						<textarea class="form-control m-input" name="template_body"  id ="template_body" title="Email Body" placeholder="HI...."></textarea>
-						<span class="m-form__help">
-							Please enter email body.
-					</span>
-					</div>
-					
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						TO *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<select class="form-control m-input" name="email_to">
-							<option value="">
-								Select
-							</option>
-							<option>
-								Group Admin
-							</option>
-							<option>
-								Group Marketing
-							</option>
-							<option>
-								Group Finance
-							</option>
-						</select>
-						<span class="m-form__help">
-							Please select an option.
-						</span>
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						CC *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<select class="form-control m-input" name="email_cc">
-							<option value="">
-								Select
-							</option>
-							<option>
-								Group Admin
-							</option>
-							<option>
-								Group Marketing
-							</option>
-							<option>
-								Group Finance
-							</option>
-						</select>
-						<span class="m-form__help">
-							Please select an option.
-						</span>
-					</div>
-				</div>
-				<div class="form-group m-form__group row">
-					<label class="col-form-label col-lg-3 col-sm-12">
-						BCC *
-					</label>
-					<div class="col-lg-4 col-md-9 col-sm-12">
-						<select class="form-control m-input" name="email_bcc">
-							<option value="">
-								Select
-							</option>
-							<option>
-								Group Admin
-							</option>
-							<option>
-								Group Marketing
-							</option>
-							<option>
-								Group Finance
-							</option>
-						</select>
-						<span class="m-form__help">
-							Please select an option.
-						</span>
-					</div>
-				</div>
-				
-			</div>
-			<div class="m-portlet__foot m-portlet__foot--fit">
-				<div class="m-form__actions m-form__actions">
-					<div class="row">
-						<div class="col-lg-9 ml-lg-auto">
-							<button type="reset" class="btn btn-brand">
-								Submit
-							</button>
-							<button type="reset" class="btn btn-secondary">
-								Cancel
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-		<!--end::Form-->
-	</div>
-	<!--end::Portlet-->
-</div>
+    <div class="m-content">
+        <!--begin::Portlet-->
+        <div class="m-portlet">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Create Email Template
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!--begin::Form-->
+            <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addFormGroup" (ngSubmit)="addFormSubmit()">
+                <div class="m-portlet__body">
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            Subject
+                        </label>
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <input type="text" class="form-control m-input" aria-describedby="Subject"  formControlName="email_subject" placeholder="Enter Email Subject" [(ngModel)]="templateData.email_subject">
+                            <span class="m-form__help">
+                                Please enter email subject.
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            Body
+                        </label>
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <textarea class="form-control m-input" title="Email Body" placeholder="HI...." formControlName="email_body" [(ngModel)]="templateData.email_body"></textarea>
+                            <span class="m-form__help">
+                                Please enter email body.
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            TO *
+                        </label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <select formControlName="email_to" [(ngModel)]="templateData.email_to" class="form-control m-input" name="option">
+                                <option value=""> Select </option>
+                                <option *ngFor="let item of emailGroupList" value="{{item.id}}"> {{item.group}} </option>
+                            </select>
+                            <span class="m-form__help">
+                                Please select an option.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            CC *
+                        </label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <select formControlName="email_cc" [(ngModel)]="templateData.email_cc" class="form-control m-input" name="option">
+                                <option value=""> Select </option>
+                                <option *ngFor="let item of emailGroupList" value="{{item.id}}"> {{item.group}} </option>
+                            </select>
+                            <span class="m-form__help">
+                                Please select an option.
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group row">
+                        <label class="col-form-label col-lg-3 col-sm-12">
+                            BCC *
+                        </label>
+                        <div class="col-lg-4 col-md-9 col-sm-12">
+                            <select formControlName="email_bcc" [(ngModel)]="templateData.email_bcc" class="form-control m-input" name="option">
+                                <option value=""> Select </option>
+                                <option *ngFor="let item of emailGroupList" value="{{item.id}}"> {{item.group}} </option>
+                            </select>
+                            <span class="m-form__help">
+                                Please select an option.
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="m-portlet__foot m-portlet__foot--fit">
+                    <div class="m-form__actions m-form__actions">
+                        <div class="row">
+                            <div class="col-lg-9 ml-lg-auto">
+                                <button type="submit" class="btn btn-brand">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Portlet-->
+    </div>
 </ng-container>
 
 
@@ -270,11 +240,6 @@
                                             <th>
                                                 Body
                                             </th>
-                                            
-                                            <th>
-                                                Created At
-                                            </th>
-                                            
                                             <th>
                                                 Status
                                             </th>
@@ -284,23 +249,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let bill of userList; let i = index;">
+                                        <tr *ngFor="let bill of templateList; let i = index;">
                                             <th scope="row">
-                                                {{userList[i].id}}
+                                                {{templateList[i].id}}
                                             </th>
                                             <td>
-                                                {{userList[i].first_name}} {{userList[i].last_name}}
+                                                {{templateList[i].subject}} 
                                             </td>
+
                                             <td>
-                                                Individual
+                                                {{templateList[i].body}}
                                             </td>
-                                            <td>
-                                                {{userList[i].mobile}}
-                                            </td>
-                                            <td>
-                                                {{userList[i].email}}
-                                            </td>
-                                            
+
+
                                             <td data-field="Status" class="m-datatable__cell"><span style="width: 110px;"><span class="m-badge  m-badge--success m-badge--wide">Active</span></span></td>
                                             <td data-field="Actions" class="m-datatable__cell">
                                                 <span style="overflow: visible; width: 110px;">
@@ -309,13 +270,13 @@
                                                             <i class="la la-ellipsis-h"></i>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i class="la la-edit"></i> Edit Details</a>
-                                                             <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
-                                                             <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
-                                                         </div>
+                                                            <a class="dropdown-item" href="#"><i class="la la-leaf"></i> Update Status</a>
+                                                            <a class="dropdown-item" href="#"><i class="la la-print"></i> Generate Report</a>
+                                                        </div>
                                                     </div>
-                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details" (click)="editUser(userList[i].id)"><i class="la la-edit"></i></a>
-                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete" (click)="deleteUser(userList[i].id)">
-                                                    <i class="la la-trash"></i></a>
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details" (click)="editTemplate(templateList[i].id)"><i class="la la-edit"></i></a>
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete" (click)="deleteTemplate(templateList[i].id)">
+                                                        <i class="la la-trash"></i></a>
                                                 </span>
                                             </td>
                                         </tr>

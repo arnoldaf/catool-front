@@ -20,9 +20,9 @@ export const APP_DI_CONFIG: AppConfig = {
     API_URLS: {
         user: 'user',
         getUsers: 'getUsers',
-		vendor : 'vendor',
-		vendorBilling : 'vendorBilling',
-
+        getCaUsers: 'getCaUsers',
+		    vendor : 'vendor',
+		    vendorBilling : 'vendorBilling',
     },
     //To display time duration for all Alert, Notification Messages
     ALERT_DISPLAY_TIME: 4000, //4 Seconds

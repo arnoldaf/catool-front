@@ -22,20 +22,32 @@ export class UserComponent implements AfterViewInit, OnInit {
     editView = false;
     userDetail: any = [];
     userList: any = [];
-    languages: any = [];
-    roles: any = [];
-    selectedRole: any;
-    selectedLanguage: any;
-    selectedStatus: any;
-    role_name: any;
+    first_name: any;
+    middle_name: any;
+    last_name: any;
+    user_type_id: any;
+    url: any;
+    client_code: any;
     email: any;
-    firstname: any;
-    lastname: any;
-    registerMsg = false;
-    registerFrmErr = {};
-    modalReference: any;
-    closeResult: string;
-    isListLoading = true;
+    mobile: any;
+    //password: any;
+    password_confirmation: any;
+    phone: any;
+    personal_email: any;
+    address: any;
+    city: any;
+    state_id: any;
+    county_id: any;
+    zip_code: any;
+    office_address: any;
+    office_phone: any;
+    gst_number: any;
+    pan_number: any;
+    adhar_number: any;
+    brand_name: any;
+    referral_code: any;
+    //status: any;
+
     currentPage = 0;
     options: [
         { key: '1', name: 'Enable' },
@@ -57,15 +69,8 @@ export class UserComponent implements AfterViewInit, OnInit {
         private apiService: ApiService,
         private alertService: AlertService,
         private userService: UserService,
-        // private authService: AuthService,
-        // private router: Router,
-
     ) {
         // translate.addLangs(['en', 'fr', 'ur']);
-        // translate.setDefaultLang('en');
-
-        // const browserLang = translate.getBrowserLang();
-        // translate.use(browserLang.match(/en|fr|ur/) ? browserLang : 'en');
     };
 
     ngOnInit() {
@@ -80,26 +85,42 @@ export class UserComponent implements AfterViewInit, OnInit {
         //Materialize.updateTextFields();
     }
     docOnClick(event) {
-        this.registerMsg = false;
+      //  this.registerMsg = false;
     }
 
-    userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+    userData =    { first_name: '', middle_name: '', last_name: '', user_type_id: '', url: '', client_code: '',
+                  email: '', mobile: '', password: '', password_confirmation: '', phone: '', personal_email: '',
+                  address: '', city: '', state_id: '', county_id: '', zip_code: '', office_address: '', office_phone: '' ,
+                  gst_number: '', pan_number: '', adhar_number: '', brand_name: '' ,referral_code: '' , status: ''};
 
     formGenerate() {
 
         this.addFormGroup = this.fb.group({
+            first_name: [this.userData.first_name, [Validators.required]],
+            middle_name: [this.userData.middle_name, [Validators.required]],
+            last_name: [this.userData.last_name, [Validators.required]],
+            user_type_id: [this.userData.user_type_id, [Validators.required]],
+            url: [this.userData.url, [Validators.required]],
+            client_code: [this.userData.client_code, [Validators.required]],
             email: [this.userData.email, [Validators.required]],
-            firstname: [this.userData.firstname, [Validators.required]],
-            lastname: [this.userData.lastname, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
+            mobile: [this.userData.mobile, [Validators.required]],
             password: [this.userData.password, [Validators.required]],
-            passwor_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            client_type: [this.userData.client_type, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
+            password_confirmation: [this.userData.password_confirmation, [Validators.required]],
+            phone: [this.userData.phone, [Validators.required]],
+            personal_email: [this.userData.personal_email, [Validators.required]],
+            address: [this.userData.address, [Validators.required]],
+            city: [this.userData.city, [Validators.required]],
+            state_id: [this.userData.state_id, [Validators.required]],
+            county_id: [this.userData.county_id, [Validators.required]],
+            zip_code: [this.userData.zip_code, [Validators.required]],
+            office_address: [this.userData.office_address, [Validators.required]],
+            office_phone: [this.userData.office_phone, [Validators.required]],
+            gst_number: [this.userData.gst_number, [Validators.required]],
+            pan_number: [this.userData.pan_number, [Validators.required]],
+            adhar_number: [this.userData.adhar_number, [Validators.required]],
+            brand_name: [this.userData.brand_name, [Validators.required]],
+            referral_code: [this.userData.referral_code, [Validators.required]],
             status: [this.userData.status, [Validators.required]],
-            phonenumber: [this.userData.phonenumber, [Validators.required]],
-            profilepic: [this.userData.profilepic, [Validators.required]],
         });
         /*
         this.editFormGroup = this.fb.group({
@@ -130,24 +151,18 @@ export class UserComponent implements AfterViewInit, OnInit {
     addUser() {
         this.listView = false;
         this.addView = true;
-        setTimeout(() => {
-            // jQuery('select').material_select();
-            // Materialize.updateTextFields();
-        }, 200);
+        this.editView = false;
     }
 
 
     addFormSubmit(data: any): any {
 
-        //'Content-Type': 'multipart/form-data'
-        //this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Post', body: this.addFormGroup.value })
+        this.apiService.makeReq('getCaUsers', { method: 'Post', body: this.addFormGroup.value })
             .subscribe((res) => {
-                //this.alertService.displayLoader(false);
                 try {
-                    console.log(res);
-                    if ((res.status_code >= 200 && res.status_code < 300) && res.result == true) {
-                        this.alertService.success(res.msg ? res.msg : 'Authentican failed due to some error!');
+
+                    if ((res.errors.length == 0) {
+                        this.alertService.success('User has been created successfully!');
                         this.getUserList();
                         this.goBack();
                         this.alertService.displayLoader(false);
@@ -168,14 +183,14 @@ export class UserComponent implements AfterViewInit, OnInit {
 
     getUserList() {
         this.alertService.displayLoader(true);
-        this.apiService.makeReq('getUsers', { method: 'Get', 'currentPage': this.currentPage })
+        this.apiService.makeReq('getCaUsers', { method: 'Get', 'currentPage': this.currentPage })
             .subscribe((res) => {
                 try {
-                    
-                    if ((res.error == null )) {
-                        this.isListLoading = false;
+
+                    if ((res.errors.length == 0 )) {
+                        //this.isListLoading = false;
                         this.userList = res.data;
-                        
+
                         return true;
                     }
                 } catch (error) {
@@ -215,6 +230,6 @@ export class UserComponent implements AfterViewInit, OnInit {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-        this.userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
+        //this.userData = { email: '', firstname: '', lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '' };
     }
 }

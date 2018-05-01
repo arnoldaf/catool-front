@@ -24,6 +24,7 @@ import {UserService} from './services/user.service';
 import {VendorService} from './services/vendor.service';
 import {VendorBillingService} from './services/vendorbilling.service';
 import {LocalStorageService} from './services/local-storage.service';
+import {ArticleService} from './services/article.service';
 import {FormsModule, FormGroup, ReactiveFormsModule} from '@angular/forms';
 
 import {AppConfigModule} from './config/app-config.module';
@@ -46,7 +47,7 @@ import {AppConfigModule} from './config/app-config.module';
         FormsModule,
     ],
     providers: [
-        ScriptLoaderService, 
+        ScriptLoaderService,
         AsideNavService,
         AlertService,
         ApiService,
@@ -56,7 +57,8 @@ import {AppConfigModule} from './config/app-config.module';
 		VendorService,
 		VendorBillingService,
         LocalStorageService,
-        AppHttpService
+        AppHttpService,
+        ArticleService
     ],
     bootstrap: [AppComponent]
 })

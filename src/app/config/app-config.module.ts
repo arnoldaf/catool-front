@@ -25,6 +25,8 @@ export let APP_CONFIG = new InjectionToken<AppConfig>('app.config');
     vendorBilling : 'vendorBilling',
     emailtemplate : 'emailtemplate',
     emailgroup : 'emailgroup',
+    articles : 'articles',
+    articles_topics : 'articles/topics',
 
     },
     //To display time duration for all Alert, Notification Messages
@@ -61,4 +63,3 @@ export let APP_CONFIG = new InjectionToken<AppConfig>('app.config');
     }]
     })
     export class AppConfigModule { }
-

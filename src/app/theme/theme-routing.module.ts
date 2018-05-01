@@ -38,6 +38,10 @@ const routes: Routes = [
                 "loadChildren": ".\/..\/modules\/profile\/profile.module#ProfileModule"
             },
             {
+                "path": "articles",
+                "loadChildren": ".\/..\/modules\/article\/article.module#ArticleModule"
+            },
+            {
                 "path": "angular\/ng-bootstrap",
                 "loadChildren": ".\/pages\/default\/angular\/ng-bootstrap\/ng-bootstrap.module#NgBootstrapModule"
             },

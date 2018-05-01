@@ -36,6 +36,7 @@ export class UserComponent implements AfterViewInit, OnInit {
     personal_email: any;
     address: any;
     city: any;
+    //id: any;
     state_id: any;
     county_id: any;
     zip_code: any;
@@ -46,7 +47,7 @@ export class UserComponent implements AfterViewInit, OnInit {
     adhar_number: any;
     brand_name: any;
     referral_code: any;
-    //status: any;
+    status: any;
 
     currentPage = 0;
     options: [
@@ -161,8 +162,8 @@ export class UserComponent implements AfterViewInit, OnInit {
             .subscribe((res) => {
                 try {
 
-                    if ((res.errors.length == 0) {
-                        this.alertService.success('User has been created successfully!');
+                    if (res.errors.length == 0) {
+                        this.alertService.success('User has been created successfully.');
                         this.getUserList();
                         this.goBack();
                         this.alertService.displayLoader(false);
@@ -225,6 +226,55 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
 
     }
+
+    editUser(id) {
+           var options = { 'method': 'Get', 'urlData': id };
+           this.apiService.makeReq('getCaUsers', options)
+               .subscribe((res) => {
+                   console.log(res);
+                   this.listView = false;
+                   this.editView = true;
+                   try {
+
+                   if ((res.data)) {
+                       this.userData.first_name = res.data.first_name;
+                       this.userData.middle_name = res.data.middle_name;
+                       this.userData.last_name = res.data.last_name;
+                       this.userData.user_type_id = res.data.user_type_id;
+                       this.userData.url = res.data.url;
+                       this.userData.client_code = res.data.client_code;
+                       this.userData.email = res.data.email;
+                       this.userData.mobile = res.data.mobile;
+                       this.userData.phone = res.data.phone;
+                       this.userData.personal_email = res.data.personal_email;
+                       this.userData.address = res.data.address;
+                       this.userData.city = res.data.city_name;
+                       this.userData.state_id = res.data.state_id;
+                       this.userData.county_id = res.data.county_id;
+                       this.userData.zip_code = res.data.zip_code;
+                       this.userData.office_address = res.data.office_address;
+                       this.userData.office_phone = res.data.office_phone;
+                       this.userData.gst_number = res.data.gst_number;
+                       this.userData.pan_number = res.data.pan_number;
+                       this.userData.adhar_number = res.data.adhar_number;
+                       this.userData.brand_name = res.data.brand_name;
+                       this.userData.referral_code = res.data.referral_code;
+                       this.userData.status = res.data.status;
+                       this.userData.id = res.data.id;
+                       this.userData.password = '';
+                       this.userData.password_confirmation = '';
+                       //this.setValue(res.data);
+                       return true;
+                   }
+               } catch (error) {
+                 //alert("Error");
+               }
+           },
+           (error: any) => {
+               this.alertService.displayLoader(false);
+           });
+
+       }
 
     goBack() {
         this.editView = false;

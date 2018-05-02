@@ -21,6 +21,7 @@ export let APP_CONFIG = new InjectionToken<AppConfig>('app.config');
     API_URLS: {
     user: 'user',
     getUsers: 'getUsers',
+    getCaUsers: 'getCaUsers',
     vendor : 'vendor',
     vendorBilling : 'vendorBilling',
     emailtemplate : 'emailtemplate',

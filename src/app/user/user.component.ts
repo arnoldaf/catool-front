@@ -232,7 +232,7 @@ export class UserComponent implements AfterViewInit, OnInit {
         .subscribe((res) => {
            // alert("Hii");
             //try {
-                alert(res.errors.length);
+                
                 if ((res.errors.length == 0)) {
                     this.alertService.success('User has been deleted.');
                      this.userList = [];

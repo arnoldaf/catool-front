@@ -120,49 +120,41 @@
                         </div>
                     </div>
                     
-            <!--        
-                <form [formGroup]="addFormGroup" (ngSubmit)="addFormSubmit()">
-
-                <div class="input-field col s12">
-                    <input id="ui_title" type="text" class="validate" formControlName="email" [(ngModel)]="userData.email">
-                    <label for="ui_title">User Email</label> {{userData.email}} 
-                </div>
-
-                
-
-                <div class="col s12">
-                    <a class="btn-floating btn-sm waves-effect waves-light red" (click)="goBack()">
-                        <i class="material-icons">arrow_back</i>Go Back</a>
-                    <button class="btn waves-effect waves-light" type="submit" style='margin-left: 10px;'>
-                        <i class="material-icons">add</i> Add
-                    </button>
-                </div>
-
-            </form> -->
+            
+                    <!--begin::Form (ngSubmit)="addFormSubmit()"-->
                     
-
-                    <!--begin::Form-->
-                    
-                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addFormGroup" (ngSubmit)="addFormSubmit()">
+                    <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addFormGroup"  id="m_form_1" (ngSubmit)="addFormSubmit()">
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
                                 <div class="col-lg-6">
                                     <label>
                                         First Name:
                                     </label>
-                                    <input type="text" class="form-control m-input" placeholder="Enter first name" formControlName="firstname" [(ngModel)]="userData.firstname">
-                                    <span class="m-form__help">
-                                        Please enter your first name
-                                    </span> 
+                                    <input type="text" class="form-control m-input" placeholder="Enter first name"   name="firstname" id="firstname" formControlName="firstname" [(ngModel)]="userData.firstname" required>
+                                    
+                                    <div class="has-danger" *ngIf="addFormGroup.controls['firstname'].touched && !addFormGroup.controls['firstname'].valid">  
+                                            <span class="form-control-feedback" *ngIf="addFormGroup.controls['firstname'].hasError('required') ">  
+                                            First name is required  
+                                            </span>  
+                                            <span class="form-control-feedback" *ngIf="addFormGroup.controls['firstname'].hasError('minlength') ">  
+                                             Min length is 4  
+                                            </span>  
+                                            <span class="form-control-feedback" *ngIf="addFormGroup.controls['firstname'].hasError('maxlength') ">  
+                                            max length is 15  
+                                        </span>  
+                                    </div>  
+                                   
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="">
                                         Last Name:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter last name" formControlName="lastname" [(ngModel)]="userData.lastname">
-                                    <span class="m-form__help">
-                                        Please enter your last name
-                                    </span> 
+                                    <div class="has-danger" *ngIf="addFormGroup.controls['lastname'].touched && !addFormGroup.controls['lastname'].valid">  
+                                            <span class="form-control-feedback" *ngIf="addFormGroup.controls['lastname'].hasError('required') ">  
+                                            Last name is required  
+                                            </span>  
+                                    </div>   
                                 </div>
                             </div>
                             <div class="form-group m-form__group row">
@@ -175,9 +167,11 @@
                                      
                                     <input type="text" class="form-control m-input" placeholder="Enter email" formControlName="email" [(ngModel)]="userData.email">
                                     
-                                    <span class="m-form__help">
-                                        Please enter your email address
-                                    </span>
+                                    <div class="has-danger" *ngIf="addFormGroup.controls['email'].touched && !addFormGroup.controls['email'].valid">  
+                                            <span class="form-control-feedback" *ngIf="addFormGroup.controls['email'].hasError('required') ">  
+                                            Email is required  
+                                            </span>  
+                                    </div>
                                 </div>
                                 
                                 <div class="col-lg-6">

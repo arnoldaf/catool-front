@@ -2,10 +2,11 @@ import { Component, OnInit, Inject, ViewChild, Input, AfterViewInit, ViewEncapsu
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
-
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
 //import {AuthService} from '../services/auth.service';
+declare var $:any;
+declare var jQuery:any;
 
 @Component({
     selector: '.m-wrapper',
@@ -71,8 +72,6 @@ export class UserComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit() {
-        //jQuery('select').material_select();
-        //Materialize.updateTextFields();
     }
     docOnClick(event) {
         this.registerMsg = false;
@@ -86,17 +85,15 @@ export class UserComponent implements AfterViewInit, OnInit {
 
         this.addFormGroup = this.fb.group({
             email: [this.userData.email, [Validators.required]],
-            firstname: [this.userData.firstname, [Validators.required]],
+            firstname: [this.userData.firstname, [Validators.required, Validators.minLength(4)]],
             lastname: [this.userData.lastname, [Validators.required]],
-            name: [this.userData.name, [Validators.required]],
-            password: [this.userData.password, [Validators.required]],
-            password_confirmation: [this.userData.password_confirmation, [Validators.required]],
-            role: [this.userData.role, [Validators.required]],
-            client_type: [this.userData.client_type, [Validators.required]],
-            language: [this.userData.language, [Validators.required]],
-            status: [this.userData.status, [Validators.required]],
-            phonenumber: [this.userData.phonenumber, [Validators.required]],
-            profilepic: [this.userData.profilepic, [Validators.required]],
+            password: [this.userData.password, []],
+            password_confirmation: [this.userData.password_confirmation, []],
+            client_type: [this.userData.client_type, []],
+            language: [this.userData.language, []],
+            status: [this.userData.status, []],
+            phonenumber: [this.userData.phonenumber, []],
+            profilepic: [this.userData.profilepic, []],
         });
         this.editFormGroup = this.fb.group({
             email: [this.userData.email, [Validators.required]],
@@ -137,7 +134,11 @@ export class UserComponent implements AfterViewInit, OnInit {
 
 
     addFormSubmit(data: any): any {
-
+        
+        //Apply codition here or in the form element it self
+        if (!this.addFormGroup.valid) {
+            return false;
+        } 
         this.apiService.makeReq('getUsers', {method: 'Post', body: this.addFormGroup.value })
 
             .subscribe((res) => {

@@ -120,9 +120,6 @@
                         </div>
                     </div>
                     
-            
-                    <!--begin::Form (ngSubmit)="addFormSubmit()"-->
-                    
                     <form class="m-form m-form--fit m-form--label-align-right m-form--group-seperator-dashed" [formGroup]="addFormGroup"  id="m_form_1" (ngSubmit)="addFormSubmit()">
                         <div class="m-portlet__body">
                             <div class="form-group m-form__group row">
@@ -132,7 +129,7 @@
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter first name"   name="firstname" id="firstname" formControlName="firstname" [(ngModel)]="userData.firstname" required>
                                     
-                                    <div class="has-danger" *ngIf="addFormGroup.controls['firstname'].touched && !addFormGroup.controls['firstname'].valid">  
+                                    <div class="has-danger" *ngIf="(addFormGroup.controls['firstname'].touched || formSubmitAttempt)&& !addFormGroup.controls['firstname'].valid">  
                                             <span class="form-control-feedback" *ngIf="addFormGroup.controls['firstname'].hasError('required') ">  
                                             First name is required  
                                             </span>  
@@ -150,7 +147,7 @@
                                         Last Name:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter last name" formControlName="lastname" [(ngModel)]="userData.lastname">
-                                    <div class="has-danger" *ngIf="addFormGroup.controls['lastname'].touched && !addFormGroup.controls['lastname'].valid">  
+                                    <div class="has-danger" *ngIf="(addFormGroup.controls['lastname'].touched || formSubmitAttempt )&& !addFormGroup.controls['lastname'].valid">  
                                             <span class="form-control-feedback" *ngIf="addFormGroup.controls['lastname'].hasError('required') ">  
                                             Last name is required  
                                             </span>  
@@ -167,7 +164,7 @@
                                      
                                     <input type="text" class="form-control m-input" placeholder="Enter email" formControlName="email" [(ngModel)]="userData.email">
                                     
-                                    <div class="has-danger" *ngIf="addFormGroup.controls['email'].touched && !addFormGroup.controls['email'].valid">  
+                                    <div class="has-danger" *ngIf="(addFormGroup.controls['email'].touched || formSubmitAttempt) && !addFormGroup.controls['email'].valid">  
                                             <span class="form-control-feedback" *ngIf="addFormGroup.controls['email'].hasError('required') ">  
                                             Email is required  
                                             </span>  
@@ -189,10 +186,7 @@
                                              <option value="6">Private Limited Company</option>
                                              <option value="7">Public Company</option>
                                     </select>
-                                    
-                                    <span class="m-form__help">
-                                        Choose client type
-                                    </span>
+                                   
                                 </div>
                                 
                             </div>
@@ -203,18 +197,14 @@
                                         Phone Number:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter phone number" formControlName="phonenumber" [(ngModel)]="userData.phonenumber">
-                                    <span class="m-form__help">
-                                        Please enter your phone number
-                                    </span>
+                                    
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="">
                                         Upload your avatar:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter avatar:"  formControlName="profilepic" [(ngModel)]="userData.profilepic">
-                                    <span class="m-form__help">
-                                        Please upload your avatar
-                                    </span>
+                                    
                                 </div>
                             </div>
                             
@@ -224,18 +214,14 @@
                                         Password:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter your password"    formControlName="password" [(ngModel)]="userData.password">
-                                    <span class="m-form__help">
-                                        Please enter your password:
-                                    </span>
+                                    
                                 </div>
                                 <div class="col-lg-6">
                                     <label class="">
                                         Repeat your password:
                                     </label>
                                     <input type="text" class="form-control m-input" placeholder="Enter your password"   formControlName="password_confirmation" [(ngModel)]="userData.password_confirmation">
-                                    <span class="m-form__help">
-                                        Please repeat your password
-                                    </span>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -352,7 +338,7 @@
                                                          </div>
                                                     </div>
                                                     <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details" (click)="editUser(userList[i].id)"><i class="la la-edit"></i></a>
-                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete" (click)="deleteUser(userList[i].id)">
+                                                    <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill" title="Delete" (click)="confirmDelete(userList[i].first_name,userList[i].id)">
                                                     <i class="la la-trash"></i></a>
                                                 </span>
                                             </td>

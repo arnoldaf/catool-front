@@ -4,9 +4,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { ApiService } from '../services/api.service';
 import { AlertService } from '../services/alert.service';
+import { Helpers } from '../helpers';
+import { ScriptLoaderService } from '../_services/script-loader.service';
 //import {AuthService} from '../services/auth.service';
 declare var $:any;
 declare var jQuery:any;
+declare let swal: any;
 
 @Component({
     selector: '.m-wrapper',
@@ -18,6 +21,7 @@ export class UserComponent implements AfterViewInit, OnInit {
     addFormGroup: FormGroup;
     editFormGroup: FormGroup;
     listView = true;
+    formSubmitAttempt = false;
     testing = 'this is a test'
     addView = false;
     editView = false;
@@ -54,11 +58,11 @@ export class UserComponent implements AfterViewInit, OnInit {
     @ViewChild('add') add;
 
     constructor(
-         private fb: FormBuilder,
+          private fb: FormBuilder,
           private apiService: ApiService,
           private alertService: AlertService,
           private userService: UserService,
-         
+          private _script: ScriptLoaderService,
 
     ) {
        // translate.addLangs(['en', 'fr', 'ur']);
@@ -67,19 +71,16 @@ export class UserComponent implements AfterViewInit, OnInit {
     ngOnInit() {
       this.getUserList();
       this.formGenerate();
-
-
     }
 
     ngAfterViewInit() {
+       this._script.loadScripts('app-base-sweetalert2',
+            ['assets/demo/default/custom/components/base/sweetalert2.js']);     
     }
     docOnClick(event) {
         this.registerMsg = false;
     }
-
-
     userData = {email: '',firstname: '',lastname: '', name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '', id: ''};
-
 
     formGenerate() {
 
@@ -109,41 +110,35 @@ export class UserComponent implements AfterViewInit, OnInit {
             profilepic: [this.userData.profilepic, [Validators.required]],
             id: [this.userData.id, [Validators.required]]
         });
-
-
     }
 
-
-
     setValue(value: {[key: string]: any}, {onlySelf, emitEvent}: {onlySelf?: boolean, emitEvent?: boolean} = {}): void {
-
-        Object.keys(value).forEach(name => {
+           Object.keys(value).forEach(name => {
             if (this.editFormGroup.get(name) && value[name] != '') {
                 this.editFormGroup.controls[name].setValue(value[name], { onlySelf: true, emitEvent });
             }
         });
     }
 
-
     addUser() {
         this.listView = false;
         this.addView = true;
-
         this.editView = false;
+        this.formSubmitAttempt = false;
     }
-
 
     addFormSubmit(data: any): any {
         
+        console.log(this.addFormGroup);
         //Apply codition here or in the form element it self
         if (!this.addFormGroup.valid) {
+            this.formSubmitAttempt = true;
             return false;
         } 
         this.apiService.makeReq('getUsers', {method: 'Post', body: this.addFormGroup.value })
 
             .subscribe((res) => {
                 try {
-
                     if (res.errors.length == 0) {
                        this.alertService.success(res.msg ? res.msg : 'User has been added successfully!');
                        this.getUserList();
@@ -169,13 +164,9 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
     }
 
-
-
     editFormSubmit(data: any): any {
-        
         this.apiService.makeReq('getUsers', {method: 'Put', body: this.editFormGroup.value})
             .subscribe((res) => {
-                
                 try {
                     if ((res.errors == 0)) {
                        
@@ -206,6 +197,7 @@ export class UserComponent implements AfterViewInit, OnInit {
         this.listView = true;
         this.editView = false;
         this.addView = false;
+        this.formSubmitAttempt = false;
 
         this.alertService.displayLoader(true);
         this.apiService.makeReq('getUsers', { method: 'Get', 'currentPage': this.currentPage })
@@ -226,31 +218,8 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
     }
 
-    deleteUser(id){
-        this.alertService.displayLoader(true);
-        var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
-        this.apiService.makeReq('getUsers', options)
-        .subscribe((res) => {
-           // alert("Hii");
-            //try {
-                
-                if ((res.errors.length == 0)) {
-                    this.alertService.success('User has been deleted.');
-                     this.userList = [];
-                    this.getUserList();
-                    return true;
-                }
-           /* } catch (error) {
-              this.alertService.displayLoader(false);
-            } */
-        },
-        (error: any) => {
-            this.alertService.displayLoader(false);
-        });
 
-    }
-
- editUser(id) {
+    editUser(id) {
         var options = { 'method': 'Get', 'urlData': id };
         this.apiService.makeReq('getUsers', options)
             .subscribe((res) => {
@@ -281,12 +250,53 @@ export class UserComponent implements AfterViewInit, OnInit {
 
     }
 
+    confirmDelete (title, id) {
+            swal({
+                   title: "Are you sure you want to delete " + title + "?",
+                    text: "You will not be able to recover this !",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, keep it'
+                  }).then((result) => {
+                    if (result.value) {
+                      this.deleteUser(id);
+                      swal(
+                        'Deleted!',
+                        'Your imaginary file has been deleted.',
+                        'success'
+                      )
+                   
+                    } else if (result.dismiss === swal.DismissReason.cancel) {
+                      swal(
+                        'Cancelled',
+                        'User ' + title + '  is safe',
+                        'error'
+                      )
+                    }
+                  })   
+        }
+
+    deleteUser(id){
+        this.alertService.displayLoader(true);
+        var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
+        this.apiService.makeReq('getUsers', options)
+        .subscribe((res) => {
+                if ((res.errors.length == 0)) {
+                    this.userList = [];
+                    this.getUserList();
+                    return true;
+                }
+        },
+        (error: any) => {
+            this.alertService.displayLoader(false);
+        });
+    }
+
     goBack() {
         this.editView = false;
         this.addView = false;
         this.listView = true;
-
         this.userData = {email: '', firstname: '',lastname: '',name: '', password: '', password_confirmation: '', role: '', language: '', status: '', client_type: '', phonenumber: '', profilepic: '', id: ''};
-
-    }
+   }
 }

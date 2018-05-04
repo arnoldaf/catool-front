@@ -2,10 +2,12 @@ import { Component, OnInit, Inject, ViewChild, Input, AfterViewInit, ViewEncapsu
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-
 import { ApiService } from '../../services/api.service';
 import { AlertService } from '../../services/alert.service';
 //import {AuthService} from '../../services/auth.service';
+declare var $:any;
+declare var jQuery:any;
+declare let swal: any;
 
 @Component({
     selector: '.m-wrapper',
@@ -259,26 +261,47 @@ export class UserComponent implements AfterViewInit, OnInit {
             });
     }
 
-    deleteUser(id) {
+    confirmDelete (title, id) {
+            swal({
+                   title: "Are you sure you want to delete " + title + "?",
+                    text: "You will not be able to recover this !",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'No, keep it'
+                  }).then((result) => {
+                    if (result.value) {
+                      this.deleteUser(id);
+                      swal(
+                        'Deleted!',
+                        'Your imaginary file has been deleted.',
+                        'success'
+                      )
+                   
+                    } else if (result.dismiss === swal.DismissReason.cancel) {
+                      swal(
+                        'Cancelled',
+                        'User ' + title + '  is safe',
+                        'error'
+                      )
+                    }
+                  })   
+        }
+
+    deleteUser(id){
         this.alertService.displayLoader(true);
         var options = { 'method': 'Delete', 'body': { 'id': id, 'currentPage': this.currentPage } };
         this.apiService.makeReq('getCaUsers', options)
-            .subscribe((res) => {
-                //try {
-                    if ((res.errors.length == 0)) {
-                    this.alertService.success('User has been deleted.');
-                     this.userList = [];
+        .subscribe((res) => {
+                if ((res.errors.length == 0)) {
+                    this.userList = [];
                     this.getUserList();
                     return true;
-                    }
-               // } catch (error) {
-                //    this.alertService.displayLoader(false);
-               // }
-            },
-            (error: any) => {
-                this.alertService.displayLoader(false);
-            });
-
+                }
+        },
+        (error: any) => {
+            this.alertService.displayLoader(false);
+        });
     }
 
     editUser(id) {

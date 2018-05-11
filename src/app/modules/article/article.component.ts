@@ -5,6 +5,8 @@ import { ArticleService } from '../../services/article.service';
 
 import { ApiService } from '../../services/api.service';
 import { AlertService } from '../../services/alert.service';
+import { Helpers } from '../../helpers';
+import { ScriptLoaderService } from '../../_services/script-loader.service';
 //import {AuthService} from '../../services/auth.service';
 
 @Component({
@@ -29,6 +31,7 @@ export class ArticleComponent implements AfterViewInit, OnInit {
     description: any;
     spentHrs: any;
     addOtherTopic = false;
+    files: File = null;
     options: [
         { key: '1', name: 'Enable' },
         { key: '0', name: 'Disable' }
@@ -42,6 +45,7 @@ export class ArticleComponent implements AfterViewInit, OnInit {
         private apiService: ApiService,
         private alertService: AlertService,
         private articleService: ArticleService,
+        private _script: ScriptLoaderService
     ) {
         // translate.addLangs(['en', 'fr', 'ur']);
     };
@@ -50,15 +54,29 @@ export class ArticleComponent implements AfterViewInit, OnInit {
         this.getArticleList();
         this.formGenerate();
     }
-
     ngAfterViewInit() {
-
+        //this._script.loadScripts('.m-wrapper', ['assets/app/js/article.js']);
     }
+
+    dataTableInit(){
+      this._script.loadScripts('.m-wrapper', ['assets/app/js/article.js']);
+    }
+
     docOnClick(event) {
 
     }
 
-    articleData =    { articleTopicId: '', otherTopic: '', title: '', description: '',  spentHrs: '' };
+    handleFileInput(files) {
+      //console.log(files);
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.files = e.target.result;
+        //this.addFormGroup.patchValue({files: e.target.result});
+      };
+      this.addFormGroup.patchValue({files: reader.readAsDataURL(files[0])});
+    }
+
+    articleData =    { articleTopicId: '', otherTopic: '', title: '', description: '',  spentHrs: ''};
 
     formGenerate() {
         this.addFormGroup = this.fb.group({
@@ -66,8 +84,10 @@ export class ArticleComponent implements AfterViewInit, OnInit {
             spentHrs: [this.articleData.spentHrs, [Validators.required]],
             articleTopicId: [this.articleData.articleTopicId],
             otherTopic: [this.articleData.otherTopic],
-            description: [this.articleData.description]
+            description: [this.articleData.description],
+            files: [{}]
         });
+
     }
 
     setValue(value: { [key: string]: any }, { onlySelf, emitEvent }: { onlySelf?: boolean, emitEvent?: boolean } = {}): void {
@@ -126,13 +146,15 @@ export class ArticleComponent implements AfterViewInit, OnInit {
             .subscribe((res) => {
                 try {
                     if ((res.errors.length == 0 )) {
-                        this.articleList = res.data.data;
+                        this.articleList = res.data;
+                        this.dataTableInit();
                         return true;
                     }
                 } catch (error) {
                     //this.authService.isTokenExpired(error);
                     //this.alertService.displayLoader(false);
                 }
+
             },
             (error: any) => {
                 //this.authService.isTokenExpired(error);

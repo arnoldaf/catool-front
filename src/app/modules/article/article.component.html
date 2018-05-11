@@ -187,7 +187,7 @@
     				</label>
 
     				<div class="col-lg-4 col-md-9 col-sm-12 custom-file">
-    					<input class="custom-file-input" id="customFile" type="file">
+    					<input class="custom-file-input" id="customFile" type="file" (change)="handleFileInput($event.target.files)">
     					<label class="custom-file-label" for="customFile">
     						Choose file
     					</label>
@@ -227,20 +227,36 @@
                 <!--begin::Portlet-->
                 <!--end::Portlet-->  		<!--begin::Portlet-->
                 <div class="m-portlet">
-                    <div class="m-portlet__head">
-                        <div class="m-portlet__head-caption">
-                            <div class="m-portlet__head-title">
-                                <h3 class="m-portlet__head-text">
-                                    Articles
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
                     <div class="m-portlet__body">
                         <!--begin::Section-->
                         <div class="m-section">
                             <div class="m-section__content">
-                                <table class="table table-striped m-table">
+
+                              <!--begin: Search Form -->
+                              <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                                <div class="row align-items-center">
+                                  <div class="col-xl-8 order-2 order-xl-1">
+                                    <div class="form-group m-form__group row align-items-center">
+
+                                      <div class="col-md-4">
+                                        <div class="m-input-icon m-input-icon--left">
+                                          <input type="text" class="form-control m-input" placeholder="Search..." id="generalSearch">
+                                          <span class="m-input-icon__icon m-input-icon__icon--left">
+                                            <span>
+                                              <i class="la la-search"></i>
+                                            </span>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                              <!--end: Search Form -->
+
+
+                                <table class="m-datatable" id="html_table">
                                     <thead>
                                         <tr>
                                             <th>
@@ -265,9 +281,9 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let article of articleList">
-                                            <th scope="row">
+                                            <td>
                                                 {{article.id}}
-                                            </th>
+                                            </td>
                                             <td>
                                                 {{article.topic_name}}
                                             </td>
